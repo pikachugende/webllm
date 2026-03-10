@@ -1,0 +1,647 @@
+What is the capital of Austria?
+Who wrote Romeo and Juliet?
+What year did World War II end?
+How do I make pasta?
+Translate "hello" to Spanish
+What's a good movie to watch tonight?
+Tell me a fun fact
+What does HTTP stand for?
+How many days are in a leap year?
+What's the weather like in summer?
+Summarize this paragraph for me
+How do you say thank you in Japanese?
+What is the speed of light?
+Give me a synonym for happy
+What's the largest planet in the solar system?
+How do I restart my computer?
+What is the boiling point of water?
+Can you write a short poem about rain?
+What is a haiku?
+Who is the current president of the United States?
+What does CPU stand for?
+How do you cook rice?
+What is the Pythagorean theorem?
+What does DNS stand for?
+Name three programming languages
+What is machine learning?
+Define recursion in one sentence
+What are the primary colors?
+How many bytes in a kilobyte?
+What is JSON?
+Gemini hat gesagt
+What is the capital of France?
+How’s your day going so far?
+Define the word "serendipity."
+What is the square root of 144?
+Who was the first person to walk on the moon?
+What does "altruism" mean?
+How do you say "hello" in Spanish?
+What is the boiling point of water in Celsius?
+Who painted the Mona Lisa?
+What is the chemical symbol for gold?
+Tell me a fun fact about dolphins.
+What is the tallest mountain in the world?
+How many continents are there?
+What is the definition of "metaphor"?
+What is 15 percent of 200?
+Who wrote "Romeo and Juliet"?
+What is the largest ocean on Earth?
+How many days are in a leap year?
+What does the acronym "NASA" stand for?
+Hi there, how are you today?
+What is the capital of Japan?
+Define "photosynthesis" in one sentence.
+How many ounces are in a pound?
+What is the speed of light?
+Who is the current President of the United States?
+What is the hardest natural substance on Earth?
+What is the currency used in Germany?
+How many planets are in our solar system?
+What does "oxymoron" mean?
+How many bones are in the adult human body?
+What is the primary ingredient in hummus?
+What year did World War II end?
+What is the smallest country in the world?
+How do you spell "maneuver"?
+What is the most common gas in Earth's atmosphere?
+Who discovered penicillin?
+What is a group of lions called?
+How many colors are in a rainbow?
+What is the capital of Australia?
+Define "stoic."
+What is the population of the world?
+How many strings does a standard guitar have?
+What is the freezing point of water in Fahrenheit?
+Who was the first President of the United States?
+What is the largest mammal?
+What does "quantum" mean?
+How many centimeters are in an inch?
+What is the name of the galaxy we live in?
+What is the longest river in the world?
+What is the main ingredient in chocolate?
+How do you say "thank you" in French?
+What is 7 multiplied by 8?
+Define "syntax."
+Who is known as the "King of Pop"?
+What is the chemical formula for water?
+How many sides does an octagon have?
+What is the capital of Canada?
+What does the word "ephemeral" mean?
+Who invented the lightbulb?
+What is the largest desert in the world?
+How many states are in the U.S.?
+What is the powerhouse of the cell?
+What is the national animal of Scotland?
+Define "algorithm."
+What is the value of pi to two decimal places?
+Who wrote the "Harry Potter" series?
+What is the official language of Brazil?
+How many hours are in a week?
+What is the color of an emerald?
+What does "nostalgia" mean?
+What is the most spoken language in the world?
+Who played Iron Man in the Marvel movies?
+What is the capital of Italy?
+How many legs does a spider have?
+What is the largest planet in our solar system?
+Define "entropy."
+What is the distance from the Earth to the Sun?
+What is the name of Batman’s butler?
+How many grams are in a kilogram?
+What is the symbol for lead on the periodic table?
+What does "pragmatic" mean?
+Who was Cleopatra?
+What is the capital of New York state?
+How many teeth does an adult human typically have?
+What is the deepest part of the ocean called?
+What is the definition of a "palindrome"?
+What year did the Titanic sink?
+Who is the author of "The Great Gatsby"?
+What is the square root of 81?
+How do you say "goodbye" in German?
+What is the largest state in the U.S. by area?
+Define "resilience."
+What is the main gas we breathe out?
+Who is the Greek god of the sea?
+How many minutes are in a day?
+What is the capital of Egypt?
+What does "hyperbole" mean?
+Which planet is known as the Red Planet?
+What is the primary language spoken in Mexico?
+Good morning, what's on your mind today?
+What is the capital of Japan?
+How tall is Mount Everest?
+What does CPU stand for?
+Is Pluto still considered a planet?
+What's the boiling point of water in Celsius?
+How many continents are there?
+What color is a ripe banana?
+Define the word "photosynthesis".
+What's 7 × 8?
+Who painted the Mona Lisa?
+What is the largest ocean on Earth?
+How many days are in February in a leap year?
+What does HTTP stand for?
+Is a tomato a fruit or a vegetable?
+What's the chemical symbol for gold?
+How fast does light travel in vacuum?
+What is the currency of Brazil?
+Define "algorithm".
+Who wrote Romeo and Juliet?
+What's the square root of 144?
+How many planets are in our solar system?
+What is H₂O?
+What's the longest river in the world?
+Define "democracy".
+What year did World War II end?
+How many sides does a hexagon have?
+What is the freezing point of water?
+What's the capital of Australia?
+Who discovered gravity?
+Define "internet".
+What gas do plants absorb?
+How many zeros are in one million?
+What's the smallest country in the world?
+Define "photosynthesis" in one sentence.
+What is the main ingredient in bread?
+How many players are on a soccer team?
+What does DNA stand for?
+What's the opposite of "hot"?
+Who is the current mayor of Vienna?
+Define "gravity".
+What color is the sky on a clear day?
+How many letters are in the English alphabet?
+What's 15 + 27?
+What is the largest mammal?
+Define "electricity".
+Who invented the telephone?
+What's the capital of France?
+How many bones are in the human body?
+What does WWW stand for?
+Is coffee a fruit or a bean?
+What's the speed limit in a school zone usually?
+Define "democracy" simply.
+What planet is closest to the Sun?
+How many hours are in a day?
+What's the chemical symbol for oxygen?
+Who painted the Sistine Chapel ceiling?
+Define "bacteria".
+What is the tallest building in the world right now?
+How many strings does a guitar have?
+What's 100 ÷ 5?
+What does USB stand for?
+Is a spider an insect?
+What's the capital of Canada?
+Define "volcano".
+How many colors are in a rainbow?
+What year did the first iPhone come out?
+What's the largest desert in the world?
+Define "oxygen".
+Who was the first man on the Moon?
+How many days are in a year?
+What is the pH of pure water?
+What's the currency of Japan?
+Define "tsunami".
+How many oceans are there?
+What gas do humans breathe out?
+What's the boiling point of water in Fahrenheit?
+Define "pixel".
+Who wrote Harry Potter?
+How many continents touch the Pacific Ocean?
+What is the hardest natural substance?
+What's 9 × 12?
+Define "cloud".
+What is the capital of Italy?
+How many players are on a basketball team?
+What's the largest bird in the world?
+Define "virus".
+Who painted Starry Night?
+What does RAM stand for in computers?
+How many states are in the USA?
+What's the currency of the United Kingdom?
+Define "echo".
+What is the fastest land animal?
+How many teeth does an adult human have?
+What's the capital of Spain?
+Define "recycle".
+Who discovered penicillin?
+How many planets have rings?
+What gas makes up most of Earth's atmosphere?
+What is the capital of France?
+How tall is the Burj Khalifa?
+Who wrote the novel "Pride and Prejudice"?
+What is the chemical symbol for gold?
+Define photosynthesis.
+What year did World War II end?
+How many continents are there?
+What is the square root of 144?
+Who was the first person to walk on the moon?
+What is the largest ocean on Earth?
+What is the currency of Japan?
+How many bones are in the adult human body?
+What is the speed of light?
+Who painted the Mona Lisa?
+What is the longest river in the world?
+What is the capital of Canada?
+Define "metaphor".
+What is the atomic number of oxygen?
+How many planets are in our solar system?
+What language is spoken in Brazil?
+What is the tallest mountain in the world?
+Who invented the telephone?
+What is the boiling point of water?
+What is the smallest prime number?
+What is the main ingredient in bread?
+What year did the Titanic sink?
+What is the capital of Australia?
+Define "gravity".
+Who is the author of "1984"?
+What is the largest mammal in the world?
+What is the currency of the United Kingdom?
+How many hearts does an octopus have?
+What is the chemical formula for water?
+What is the fastest land animal?
+Who was the first President of the United States?
+What is the capital of Italy?
+Define "democracy".
+How many degrees are in a circle?
+What is the longest bone in the human body?
+What is the largest desert in the world?
+What year was the first iPhone released?
+Who developed the theory of relativity?
+What is the main language spoken in Argentina?
+What is the freezing point of water in Fahrenheit?
+What is the capital of Egypt?
+Define "algorithm".
+How many strings does a standard violin have?
+What is the smallest country in the world by area?
+Who wrote "Hamlet"?
+What is the primary gas found in Earth's atmosphere?
+What is the hardest natural substance on Earth?
+What is the capital of Mexico?
+Define "photosynthesis".
+How many days are in a leap year?
+What is the largest planet in our solar system?
+Who painted the ceiling of the Sistine Chapel?
+What is the currency of China?
+What is the fastest bird in the world?
+What year did the Berlin Wall fall?
+What is the capital of Spain?
+Define "irony".
+How many players are on a baseball team?
+What is the deepest part of the ocean?
+Who is known as the father of modern physics?
+What is the chemical symbol for silver?
+What is the capital of India?
+How many chambers does the human heart have?
+What is the main ingredient in guacamole?
+What is the largest island in the world?
+Who wrote "The Odyssey"?
+What is the most abundant gas in the universe?
+What is the capital of Russia?
+Define "culture".
+How many sides does a hexagon have?
+What is the smallest prime number greater than 10?
+What is the boiling point of water in Fahrenheit?
+What is the longest wall in the world?
+Who discovered penicillin?
+What is the capital of South Korea?
+Define "supply and demand".
+How many legs does a spider have?
+What is the largest lake in Africa?
+What year was the first moon landing?
+What is the primary ingredient in hummus?
+What is the capital of Brazil?
+Define "demographics".
+How many millimeters are in a centimeter?
+What is the world's most spoken language?
+Who was the first woman to win a Nobel Prize?
+What is the chemical symbol for iron?
+What is the capital of Turkey?
+Define "paradox".
+How many stars are on the American flag?
+What is the longest river in Europe?
+What is the main language spoken in Egypt?
+Who wrote "The Iliad"?
+What is the smallest bone in the human body?
+What is the capital of Argentina?
+Define "biodiversity".
+How many hours are in a day?
+What is the fastest car in the world?
+What is the main religion in Thailand?
+What is the capital of Canada?
+How many continents are there on Earth?
+What does the word “serendipity” mean?
+Who wrote the novel 1984?
+What is the boiling point of water in Celsius?
+How far is the Moon from Earth?
+What is the largest ocean on Earth?
+Who painted the Mona Lisa?
+What does CPU stand for?
+What is the tallest mountain in the world?
+How many days are in a leap year?
+What is the chemical symbol for gold?
+Who invented the telephone?
+What does “unhinged” mean in slang?
+How many planets are in the solar system?
+What year did World War II end?
+What language is spoken in Brazil?
+What is the speed of light?
+Who is the CEO of Tesla?
+What is the capital of Japan?
+How many bones are in the human body?
+What is the square root of 144?
+What does HTTP stand for?
+Who discovered gravity?
+What is the smallest prime number?
+What country is the Eiffel Tower in?
+What is the freezing point of water in Fahrenheit?
+Who wrote Harry Potter?
+What is the population of Earth approximately?
+What does “AI” stand for?
+What is the largest desert in the world?
+How many minutes are in an hour?
+What is the capital of Australia?
+Who was the first person on the Moon?
+What is the main language spoken in Spain?
+What does “LOL” mean in texting?
+What is the longest river in the world?
+Who composed Beethoven’s Fifth Symphony?
+What is the chemical symbol for oxygen?
+What is the capital of Germany?
+What does RAM do in a computer?
+How many seconds are in a minute?
+What is the largest planet in our solar system?
+Who wrote The Lord of the Rings?
+What is the capital of Italy?
+What does “VPN” stand for?
+How many hours are in a day?
+What is the smallest country in the world?
+Who painted The Starry Night?
+What is the currency of the United Kingdom?
+What does “DIY” mean?
+How many letters are in the English alphabet?
+What is the capital of France?
+Who invented the light bulb?
+What is the chemical symbol for iron?
+What does “NASA” stand for?
+What is the tallest animal in the world?
+How many weeks are in a year?
+What is the capital of China?
+Who wrote The Great Gatsby?
+What does “GPU” stand for?
+What is the main ingredient in bread?
+How many planets are closer to the Sun than Earth?
+What is the capital of Canada?
+Who discovered penicillin?
+What does “FAQ” stand for?
+What is the hardest natural substance?
+How many months have 31 days?
+What is the capital of India?
+Who was the first president of the United States?
+What does “HTML” stand for?
+What is the largest mammal?
+How many sides does a hexagon have?
+What is the capital of South Korea?
+Who wrote To Kill a Mockingbird?
+What does “USB” stand for?
+What is the chemical formula for water?
+How many players are on a soccer team?
+What is the capital of Mexico?
+Who developed the theory of relativity?
+What does “PDF” stand for?
+What is the fastest land animal?
+How many centimeters are in a meter?
+What is the capital of Russia?
+Who painted The Last Supper?
+What does “API” stand for?
+What is the largest island in the world?
+How many degrees are in a right angle?
+What is the capital of Argentina?
+Who invented the World Wide Web?
+What does “LAN” stand for?
+What is the smallest planet in the solar system?
+How many strings does a standard guitar have?
+What is the capital of Egypt?
+Who wrote Pride and Prejudice?
+What does “DNS” stand for?
+What is the longest bone in the human body?
+How many milliseconds are in a second?
+hey what's up
+how's your day going
+what are you doing
+just chilling watching tv
+i'm so bored
+had a long day at work
+what's new with you
+did you see that game last night
+i'm hungry
+what should i eat for dinner
+weather is crazy today
+can't believe it's already the weekend
+just woke up
+coffee time
+what are your plans later
+i'm tired
+listening to some music
+any good movie recommendations
+what's your favorite food
+i love this song
+so busy today
+just got home
+what's happening
+thinking about ordering pizza
+how was your weekend
+it's so hot outside
+can't stop yawning
+what's the best show on netflix right now
+just finished work
+need a vacation
+what are you wearing
+i'm so happy
+feeling lazy today
+what did you have for lunch
+just working out
+this traffic is insane
+any plans for tonight
+i'm craving chocolate
+what's your favorite color
+just got out of the shower
+so tired zzz
+what's up
+hey you
+good morning
+good afternoon
+good evening
+how's it going
+long time no see
+what's the word
+how have you been
+what's happening
+how's everything
+how's life
+what's good
+what's new
+how are you feeling
+what's shaking
+how's your morning
+how's your afternoon
+how's your evening
+how was your night
+how'd you sleep
+what's cracking
+yo
+hi there
+hello
+hey hey
+what's popping
+just woke up from a nap
+making some food
+watching youtube
+scrolling through tiktok
+playing some games
+what games are you playing
+i'm so bored someone talk to me
+just got off the phone
+waiting for my food to arrive
+this show is so good
+can't stop laughing
+my cat is being crazy today
+what's the vibe
+feeling good today
+not much just relaxing
+thinking about going for a walk
+it's raining outside so cozy
+just made some tea
+what music are you into
+any new songs i should check out
+i'm learning to cook
+tried a new recipe today
+what's your go-to comfort food
+i'm so full
+need to go grocery shopping
+lazy sunday vibes
+monday blues
+tgif
+ready for the weekend
+what are you doing this weekend
+just hanging out
+cleaning the house
+doing laundry so fun
+what's your favorite hobby
+i like drawing
+just started reading a new book
+any book recommendations
+what's your favorite movie
+i love comedies
+do you like scary movies
+what's your sign
+i'm a gemini
+tell me a fun fact
+i'm so random today
+just thinking about life
+deep thoughts
+what makes you happy
+i love sunny days
+but i also love thunderstorms
+what's your favorite season
+fall is the best
+i love when the leaves change color
+winter is too cold
+summer is for swimming
+spring is pretty
+what are your pet peeves
+i hate when people are late
+i'm always on time
+what's your biggest fear
+i'm scared of spiders
+heights are terrifying
+do you believe in ghosts
+i think i saw one once
+probably just my imagination
+what's your dream job
+i have no idea what i'm doing
+adulting is hard
+same old same old
+just another day
+making the most of it
+living my best life
+take it easy
+you first
+no you hang up
+just kidding
+lol
+haha
+omg
+no way
+for real
+same
+literally
+i feel that
+big mood
+vibes
+period
+okay but
+honestly
+right
+exactly
+totally
+definitely
+maybe
+probably
+idk
+whatever
+sure
+ok
+cool
+nice
+awesome
+sweet
+dope
+lit
+fire
+amazing
+perfect
+okay cool
+sounds good
+works for me
+i'm down
+let's do it
+maybe later
+not right now
+i'm busy
+talk later
+gotta go
+brb
+back
+here i am
+missed me
+i'm back
+what'd i miss
+say that again
+come again
+i didn't catch that
+never mind
+forget it
+it's nothing
+don't worry about it
+all good
+no problem
+my bad
+sorry about that
+apology accepted
+we're cool
+no hard feelings
+water under the bridge
+tank you
+you are the best
+thanks
+much appreciated
+thank you so much
+thanks a lot
+thanks a million
+i can't thank you enough
+you're a lifesaver
+i owe you one
+you're the best
+i'm grateful

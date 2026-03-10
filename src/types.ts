@@ -1,0 +1,93 @@
+// ── Shared data types ────────────────────────────────────────────────────────
+
+export type MessageRole = 'user' | 'assistant' | 'system';
+
+export interface MessageAttachment {
+  /** Original file name */
+  name: string;
+  /** Text content of the file (may be truncated to 8 000 chars) */
+  content: string;
+}
+
+export interface ImageAttachment {
+  /** Original file name */
+  name: string;
+  /** data:<mime>;base64,<data> – ready to pass to image_url.url */
+  dataUrl: string;
+  /** MIME type, e.g. "image/png" */
+  mimeType: string;
+}
+
+export interface Message {
+  id: string;
+  role: MessageRole;
+  content: string;
+  timestamp: number;
+  attachments?: MessageAttachment[];
+}
+
+export interface Conversation {
+  id: string;
+  /** First user message, truncated to ~45 chars */
+  title: string;
+  messages: Message[];
+  createdAt: number;
+  updatedAt: number;
+}
+
+// ── Worker message protocol ──────────────────────────────────────────────────
+
+/** Content part for text (all models) */
+export interface TextContentPart {
+  type: 'text';
+  text: string;
+}
+
+/** Content part for images (vision models only) */
+export interface ImageContentPart {
+  type: 'image_url';
+  image_url: { url: string };
+}
+
+export type ContentPart = TextContentPart | ImageContentPart;
+
+/** Minimal subset of ChatCompletionMessageParam we need. */
+export interface WorkerChatMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: string | ContentPart[];
+}
+
+export type ToWorker =
+  | { type: 'init'; model: string }
+  | { type: 'reload'; model: string }
+  | { type: 'preload'; model: string }   // background download, keeps active engine intact
+  | { type: 'generate'; id: string; messages: WorkerChatMessage[] }
+  | { type: 'abort' };
+
+export type FromWorker =
+  | { type: 'progress'; progress: number; text: string }
+  | { type: 'ready'; cached: boolean }
+  | { type: 'preload_progress'; model: string; progress: number; text: string }
+  | { type: 'preload_done'; model: string }
+  | { type: 'chunk'; id: string; delta: string }
+  | { type: 'done'; id: string }
+  | { type: 'error'; message: string };
+
+// ── Vision model list ─────────────────────────────────────────────────────────
+
+/** Models in @mlc-ai/web-llm 0.2.79 that accept image content parts. */
+export const VISION_MODELS: readonly string[] = [
+  'Phi-3.5-vision-instruct-q4f16_1-MLC',
+  'Phi-3.5-vision-instruct-q4f32_1-MLC',
+];
+
+// ── Preset model IDs ─────────────────────────────────────────────────────────
+
+export const INSTANT_MODEL = 'gemma-2b-it-q4f32_1-MLC';
+export const REASONING_MODEL = 'Qwen3-1.7B-q4f16_1-MLC';
+
+// ── Mode ─────────────────────────────────────────────────────────────────────
+
+/** "instant" uses the fast model, "reasoning" uses the reasoning model,
+ *  "auto" routes each message based on complexity heuristics. */
+export type EngineMode = 'instant' | 'auto' | 'reasoning';

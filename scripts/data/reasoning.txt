@@ -1,0 +1,430 @@
+Prove that the square root of 2 is irrational
+Derive the quadratic formula from first principles
+Implement a binary search tree with insert and delete in TypeScript
+Debug this React useEffect that causes an infinite render loop
+Analyze the time and space complexity of merge sort
+Explain why gradient descent can get stuck in local minima
+Compare quicksort and mergesort and explain when to prefer each
+Write a dynamic programming solution for the 0/1 knapsack problem
+Prove by induction that the sum of first n integers is n(n+1)/2
+Explain the CAP theorem and its trade-offs in distributed systems
+Implement a LRU cache with O(1) get and put operations
+Design a rate limiter for an API with 1000 requests per minute limit
+Solve this system of linear equations: 3x + 2y = 12, x - y = 1
+Explain the difference between TCP and UDP and when to use each
+Why does this recursive Fibonacci implementation have exponential time complexity and how do I fix it?
+Walk me through how HTTPS handshake works step by step
+Analyze the trade-offs between microservices and monolithic architecture
+Implement a thread-safe singleton pattern in Java
+How would you design a URL shortener like bit.ly at scale?
+Prove the fundamental theorem of calculus
+Explain Bayes theorem with a worked example
+What is the time complexity of Dijkstra's algorithm and why?
+Implement a regex engine that supports . and * operators
+Solve: find all prime numbers up to 1000 using the Sieve of Eratosthenes
+Explain why floating point addition is not associative with a concrete example
+Design a consistent hashing scheme for a distributed cache
+Implement topological sort for a directed acyclic graph
+Prove that P ≠ NP is an open problem and explain why it matters
+How does HTTPS prevent man-in-the-middle attacks?
+Analyze this O(n^2) algorithm and rewrite it to run in O(n log n)
+If a sphere is inscribed in a cube with a surface area of 864 square centimeters, what is the volume of the sphere?
+Explain the output of this Python code: print([x for x in range(10) if x % 2 == 0 and x**2 > 10]).
+Alice, Bob, and Charlie are in a room; Alice sees Bob's hat is red, Bob sees Charlie's hat is blue, and Charlie sees Alice's hat is red. If there are only two red hats and one blue hat, who knows their own hat color?
+Calculate the total number of handshakes that occur in a room of 15 people if everyone shakes hands with everyone else exactly once.
+Analyze the time and space complexity of a recursive implementation of the Merge Sort algorithm.
+A traveler must cross a desert that takes 4 days to traverse. Each person can only carry 3 days' worth of water. What is the minimum number of assistants needed to get the traveler across?
+Solve the differential equation dy/dx=(3x 2+4x+2)/(2(y−1)) with the initial condition y(0)=−1.
+Identify the logical fallacy in the following argument: "Since no one has proven that ghosts don't exist, they must be real."
+If a clock shows 3:15, what is the exact angle in degrees between the hour and minute hands?
+Determine the truth value of the following statement: (¬p∨q)⟺(p⟹q).
+Refactor this nested JavaScript loop to improve performance: for(let i=0; i<a.length; i++) { for(let j=0; j<b.length; j++) { if(a[i] === b[j]) return true; } }.
+A tank can be filled by pipe A in 5 hours and emptied by pipe B in 8 hours. If both pipes are opened simultaneously, how long will it take to fill the tank?
+Find the missing number in the sequence: 2, 6, 12, 20, 30, 42, .
+Given the set of premises "All mammals are warm-blooded" and "Whales are mammals," what is the logically valid conclusion?
+Write a SQL query to find the second highest salary from an Employee table without using the LIMIT or TOP keywords.
+If f(x)=2x 3−5x+3, find the coordinates of all local maxima and minima using the first derivative test.
+Three switches outside a room correspond to three lightbulbs inside. You can only enter the room once. How do you determine which switch controls which bulb?
+Convert the decimal number 255 to hexadecimal, binary, and octal.
+A ship is twice as old as the engine was when the ship was as old as the engine is now. If the sum of their ages is 49, how old is the engine?
+Debug this C++ code snippet that causes a segmentation fault: int *ptr; *ptr = 10;.
+Calculate the probability of drawing two consecutive Aces from a standard 52-card deck without replacement.
+In a certain language, "KA BU" means "Green Grass" and "BU LA" means "Grass Seed." What word most likely means "Seed"?
+A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost?
+Prove by induction that the sum of the first n odd integers is n 2.
+Explain the difference between a shallow copy and a deep copy in the context of Python's dict objects.
+If a car travels 60 miles at 30 mph and then another 60 miles at 60 mph, what is the average speed for the entire trip?
+Given the matrix A=[[1,2],[3,4]], calculate its inverse and its determinant.
+Identify the output: console.log(1 + -"1" + "2") in JavaScript.
+A farmer has 17 sheep, and all but 9 die. How many sheep are left?
+Determine the center and radius of a circle defined by the equation x 2+y 2−6x+8y=0.
+Write a regular expression that matches valid email addresses according to basic RFC 5322 standards.
+If you have a 3-gallon jug and a 5-gallon jug and an infinite supply of water, how can you measure exactly 4 gallons?
+Analyze the logical consistency of a universe where "Everything I say is a lie" is the only rule.
+Find the derivative of $g(x) = \int{0}^{x^2} \sin(t) dt$ using the Fundamental Theorem of Calculus.
+What is the Big O complexity of searching for an element in a balanced Binary Search Tree?
+A man is looking at a photograph and says, "Brothers and sisters I have none, but that man's father is my father's son." Who is in the photograph?
+Simplify the Boolean expression A⋅(¬A+B)+B⋅(B+C)⋅(B+¬C).
+How many ways can 5 people be seated around a circular table if two specific people refuse to sit next to each other?
+Determine if the series $\sum{n=1}^{\infty} 1/n^2$ converges or diverges using the p-series test.
+Rewrite this Python function using recursion instead of a while loop: def fact(n): res=1; while n>1: res*=n; n-=1; return res.
+In a race, if you pass the person in second place, what place are you in?
+A doctor gives you three pills and tells you to take one every half hour. How long will the pills last?
+Evaluate the limit as x approaches infinity for f(x)=(2x 2+3)/(5x 2−x+10).
+Explain how a Hash Map handles collisions using the separate chaining method.
+If 5 machines take 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?
+Is the set of all irrational numbers closed under addition? Provide a counterexample if it is not.
+Explain why 0.1 + 0.2 === 0.3 evaluates to false in many programming languages.
+Find the area of a triangle with vertices at (0,0), (4,0), and (2,6) using the determinant formula.
+A drawer contains 10 black socks and 10 white socks. How many must you pull out to guarantee a matching pair?
+Derive the quadratic formula by completing the square for ax 2+bx+c=0.
+What is the result of 2 ** 3 ** 2 in Python?
+A king wants to find which of his 1000 wine bottles is poisoned using as few prisoners as possible for testing. The poison takes 24 hours to kill. How many prisoners are needed?
+Contrast the behavior of var, let, and const in JavaScript regarding hoisting and block scope.
+Solve the cryptarithmetic puzzle: SEND + MORE = MONEY.
+Calculate the volume of a cylinder with a radius of 3 and a height of 10, using π≈3.14159.
+If all Bloops are Razzies and some Razzies are Lurgs, is it necessarily true that some Bloops are Lurgs?
+Explain the concept of "Deadlock" in operating systems and the four necessary conditions for it to occur.
+Find the values of k for which the system of equations 2x+ky=8 and kx+8y=16 has infinitely many solutions.
+A shirt dries in the sun in 1 hour. How long does it take for 5 shirts to dry in the sun?
+In a group of 100 people, 70 like coffee, 80 like tea, and 40 like both. How many like neither?
+Trace the execution of this tail-recursive function: def count(n): if n == 0: return 0; return 1 + count(n-1).
+Calculate the molar mass of sulfuric acid (H 2 SO 4 ) given the atomic masses of H, S, and O.
+Identify the mistake in this proof that 1=2: Let a=b, then a 2=ab, a 2−b 2 =ab−b 2, (a−b)(a+b)=b(a−b), a+b=b, 2b=b, 2=1.
+If you have two fuses that each burn for exactly 60 minutes but burn inconsistently, how do you measure 45 minutes?
+Explain the difference between an inner join and a left outer join in SQL.
+Determine the number of trailing zeros in 100! (100 factorial).
+A father is 30 years older than his son. In 5 years, he will be three times as old as his son. How old are they now?
+Describe the process of a TCP three-way handshake and why it is necessary.
+What is the derivative of x with respect to x?
+A snail is at the bottom of a 30-foot well. Each day it climbs up 3 feet, but at night it slips back 2 feet. How many days does it take to reach the top?
+Write a function in Python that detects if a linked list has a cycle using Floyd's Cycle-Finding Algorithm.
+If three cats catch three rats in three minutes, how many cats does it take to catch 100 rats in 100 minutes?
+Calculate the work done in moving an object 10 meters with a force of 50 Newtons at an angle of 30 degrees to the direction of motion.
+Is an empty set a subset of every set? Justify your answer using set theory logic.
+Explain the output of this Python code: a = [1, 2, 3]; b = a; b.append(4); print(a).
+Two people are born at the same moment, but they don't have the same birthdays. How is this possible?
+Find the sum of all integers between 1 and 1000 that are divisible by either 3 or 5.
+Given the premises "If it rains, the grass is wet" and "The grass is not wet," what can you conclude about the rain?
+How many ways can you arrange the letters in the word "STATISTICS"?
+Explain the "Diamond Problem" in multiple inheritance and how languages like Python or Java address it.
+If a lily pad doubles in size every day and fills a pond in 48 days, on which day was the pond half full?
+A person walks 1 mile south, 1 mile east, and 1 mile north, ending up exactly where they started. Where on Earth are they?
+Solve for x in the equation log 
+Analyze the security vulnerability in this code: eval("console.log(" + userInput + ")").
+How many squares of any size are there on a standard 8x8 chessboard?
+Calculate the force of gravity between two 10kg masses separated by 2 meters.
+Why is it impossible to construct a square with the same area as a given circle using only a compass and straightedge?
+Given a list of integers, write an algorithm to find the maximum subarray sum in O(n) time.
+If a plane crashes on the border between the US and Canada, where do they bury the survivors?
+Explain the concept of "Pass-by-value" versus "Pass-by-reference" using examples from C++.
+Find the integral of ln(x)dx using integration by parts.
+In a family of two children, if one is a boy born on a Tuesday, what is the probability that the other is also a boy?
+Determine the output of the following C code: int a=5, b=2; printf("%f", (float)(a/b));.
+A man has to get a fox, a chicken, and a sack of grain across a river in a boat that only holds him and one other item. How does he do it?
+What is the sum of the interior angles of a decagon?
+Explain why the time complexity of building a heap is O(n) and not O(nlogn).
+Prove that the square root of 2 is an irrational number using a proof by contradiction.
+How many edges does a complete graph with n vertices have?
+If you rotate a 2D parabola y=x2 around the y-axis, what is the shape of the resulting 3D surface?
+Write a pseudocode for a Breadth-First Search (BFS) on a graph.
+If a train leaves Chicago at 60 mph and another leaves New York at 70 mph, and the cities are 800 miles apart, when do they meet?
+Solve for x in the quadratic equation: x² - 5x + 6 = 0.
+What is the next number in the sequence: 2, 4, 8, 16, 32?
+Debug this code: print("Hello" + 5) in Python. What's the error?
+If some cats are black, and all black things are crows, are some cats crows?
+Calculate the area of a circle with radius 7 using pi as 3.14.
+Analyze this function: def add(a, b): return a + b. What happens if I call add("2", 3)?
+Deduce who owns the zebra in the Einstein puzzle variant with 5 houses.
+Find the derivative of f(x) = 3x² + 2x - 1.
+What is the probability of drawing 2 aces from a standard deck without replacement?
+Explain step-by-step how to balance the chemical equation: H2 + O2 -> H2O.
+If A implies B, and B implies C, does not C imply not A?
+Compute the factorial of 5 using recursion in pseudocode.
+Solve the riddle: What has keys but can't open locks?
+Determine if 2023 is a prime number, showing your work.
+Analyze this loop: for i in range(5): print(i). What outputs?
+If you have 3 switches and 3 bulbs, one switch per bulb, how to figure out which is which with 2 trips?
+Calculate compound interest: $1000 at 5% annually for 3 years.
+What is the sum of the first 10 natural numbers?
+Debug: Why does int("abc") fail in Python?
+Logical deduction: In a room with 3 people, one liar, one truth-teller, one random. What questions to ask?
+Find the integral of 2x dx from 0 to 1.
+Sequence: 1, 1, 2, 3, 5, 8... What is the 10th term?
+Code analysis: What does list comprehension [x**2 for x in range(10)] produce?
+Puzzle: Cross the bridge with a wolf, goat, and cabbage without them eating each other.
+Solve: 3x + 2y = 7, x - y = 1 using substitution.
+Probability: Flip a coin 3 times, chance of exactly 2 heads.
+Explain binary search algorithm and its time complexity.
+If all roses are flowers, some flowers fade quickly, do roses fade quickly?
+Compute sqrt(16) + sqrt(25) - sqrt(9).
+Analyze: def mystery(n): if n < 2: return n else: return mystery(n-1) + mystery(n-2). What is it?
+Deduce the liar: A says B lies, B says C lies, C says A and B lie.
+Geometry: Area of triangle with base 5, height 12.
+Code: Write a function to check if a string is palindrome.
+Puzzle: 9 dots in 3x3 grid, connect with 4 straight lines without lifting pen.
+Solve inequality: 2x - 4 > 6.
+Statistics: Mean of 1,3,5,7,9.
+Debug: print(1/0) in Python.
+Logic: If P or Q, and not P, then Q.
+Compute 2^10 manually.
+Analyze sorting: What is bubble sort's worst case?
+Riddle: What gets wetter as it dries?
+Find LCM of 12 and 18.
+Code: What does import math; math.pi return?
+Deduction: Knights and knaves puzzle with 2 guards.
+Calculus: Limit as x->0 of sin(x)/x.
+Sequence: 3,6,9,12... nth term formula.
+Debug: Missing colon in if statement.
+Probability: Birthday paradox for 23 people approximation.
+Explain Dijkstra's algorithm steps.
+Solve: Log base 2 of 8.
+Code analysis: Recursive vs iterative fibonacci efficiency.
+Puzzle: Monty Hall problem explanation.
+Geometry: Pythagorean theorem for 3-4-5 triangle.
+Compute matrix multiplication: [[1,2],[3,4]] * [[5,6],[7,8]].
+Analyze: While loop infinite if condition always true.
+Logic: Syllogism validity check.
+Find GCD of 48 and 36.
+Code: Reverse a list in Python without reverse().
+Deduction: Sudoku mini puzzle solve.
+Algebra: Expand (x+2)(x-3).
+Statistics: Variance of 2,4,6.
+Debug: TypeError in string concatenation.
+Puzzle: Tower of Hanoi for 3 disks.
+Calculus: Derivative of e^x.
+Sequence: Arithmetic vs geometric.
+Code: Implement quicksort pseudocode.
+Riddle: I speak without a mouth and hear without ears.
+Solve system: 4x=8, y=2x.
+Probability: Roulette odds for red.
+Explain heap data structure operations.
+Compute permutation of 5 choose 3.
+Analyze: Big O of linear search.
+Logic: Truth table for AND/OR.
+Find roots of x²+4x+4=0.
+Code: Check prime number function.
+Puzzle: River crossing with family.
+Geometry: Volume of sphere r=3.
+Debug: IndexError in list access.
+Deduction: Who is the thief among A,B,C with statements.
+Algebra: Factor x²-9.
+Statistics: Median of odd numbers list.
+Code analysis: Closure in Python.
+Riddle: What has a head, a tail, is brown, and has no legs?
+Solve: Trigonometry sin(30).
+Probability: Bayes theorem simple example.
+Explain dynamic programming fib.
+Compute combination C(10,2).
+Analyze: Stack vs queue.
+Logic: Paradox of the liar.
+Find hypotenuse of right triangle 5-12.
+Code: Merge two sorted lists.
+Puzzle: Knights tour on chessboard explanation.
+Geometry: Circumference of circle d=10.
+Debug: SyntaxError missing parenthesis.
+Deduction: Logic grid puzzle with colors and pets.
+Algebra: Simplify 2(x+3)-4.
+Statistics: Standard deviation basics.
+Code: Binary to decimal conversion function.
+A train leaves Station A at 60 mph heading towards Station B, which is 300 miles away. At the same time, a train leaves Station B at 40 mph heading towards Station A. How far from Station A do they meet?
+If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?
+A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost?
+In a lake, there is a patch of lily pads. Every day, the patch doubles in size. If it takes 48 days for the patch to cover the entire lake, how long would it take for the patch to cover half the lake?
+You have a 3-gallon jug and a 5-gallon jug. How can you measure exactly 4 gallons of water?
+A farmer has a fox, a chicken, and a bag of grain. He needs to cross a river with them, but his boat can only carry him and one item at a time. If left alone, the fox will eat the chicken, and the chicken will eat the grain. How does he get all across?
+You are given two ropes that each take exactly 60 minutes to burn, but they burn unevenly. How can you measure exactly 45 minutes using only these two ropes and a lighter?
+What is the smallest positive integer that is divisible by all numbers from 1 to 10?
+A snail falls into a 30-foot well. Each day it climbs 3 feet, but each night it slips back 2 feet. How many days to get out?
+If you have a 7-minute hourglass and an 11-minute hourglass, how can you measure 15 minutes?
+You have a 10x10 grid of lights, all off. You toggle all lights in rows 1,3,5,... and columns 2,4,6,... Which lights are on?
+A man is looking at a portrait. Someone asks him, 'Who are you looking at?' He replies: 'Brothers and sisters I have none, but that man's father is my father's son.' Who is in the portrait?
+You have an 8-liter jug full of water and empty 3-liter and 5-liter jugs. How can you get exactly 6 liters in one jug?
+A clock loses 10 minutes every hour. If it is set correctly at noon, what time will it show when the actual time is 6 pm?
+A car travels at 60 mph for the first half of a journey and 40 mph for the second half. What is the average speed?
+A pizza has a radius of 10 inches. If you cut it into 8 equal slices, what is the area of each slice?
+What is the next number in the sequence: 2, 6, 12, 20, 30, ...?
+You have a 100-story building and two eggs. You want to find the highest floor from which you can drop an egg without it breaking. How many drops do you need in the worst case?
+A rope is wound around a pole of radius 1 meter. If the rope makes 5 complete turns and the pole is 10 meters high, how long is the rope?
+A train passes a man standing on a platform in 8 seconds and passes the platform in 24 seconds. If the platform is 200 meters long, what is the length of the train?
+A number when divided by 3 leaves remainder 2, by 5 leaves remainder 3, by 7 leaves remainder 2. Find the smallest such number.
+How many times do the hands of a clock overlap in a day?
+You have a 6x6 grid. How many squares are there?
+A bag contains 4 red balls and 6 blue balls. Two balls are drawn without replacement. What is the probability that both are red?
+A dice is rolled twice. What is the probability that the sum is 7?
+A company has 10 employees. In how many ways can they choose a president, vice president, and secretary if no one can hold more than one office?
+A rectangle has a perimeter of 20 cm and an area of 24 cm². What are its dimensions?
+Solve for x: 2^(x+1) + 2^(x-1) = 40.
+If log2(3) = a and log3(5) = b, express log10(2) in terms of a and b.
+A car depreciates 15% per year. If it was worth $20,000 new, what will it be worth after 3 years?
+A bank offers 5% interest compounded annually. How long will it take for an investment to double?
+A sphere has a volume of 36π cm³. What is its surface area?
+A cone has a height of 12 cm and a base radius of 5 cm. What is its slant height?
+A right triangle has legs of 6 and 8. What is the length of the hypotenuse?
+A circle has a chord of length 10 cm that is 5 cm from the center. What is the radius?
+A square is inscribed in a circle of radius 5. What is the area of the square?
+A regular hexagon has a side length of 6. What is its area?
+A cylindrical can holds 1 liter. If its height is 20 cm, what is its radius?
+A train 150 m long passes a telegraph pole in 12 seconds. What is its speed in km/h?
+A man walks 5 km north, then 3 km east, then 2 km south. How far is he from start?
+A boat goes upstream 10 km in 2 hours and downstream 10 km in 1 hour. Find speed of boat in still water and speed of current.
+A number is increased by 20% and then decreased by 20%. What is the net change?
+If the price of an item is increased by 25%, by what percent must it be decreased to get back to the original?
+A man spends 60% of his income and saves $200. What is his income?
+A mixture of 20 liters of milk and water contains 10% water. How much water must be added to make it 20% water?
+A invests $1000 at 5% simple interest, B invests $1000 at 4% compounded annually. After 2 years, who has more?
+A die is rolled three times. What is the probability of getting at least one six?
+In a group of 30 people, what is the probability that at least two share the same birthday?
+A deck of cards has 52 cards. What is the probability of drawing a heart or a king?
+A bag has 5 red, 4 blue, 3 green. Two balls drawn without replacement. Probability they are different colors?
+A fair coin is tossed 10 times. What is the probability of exactly 5 heads?
+A function f(x) = x^2 - 3x + 2. Find its roots.
+Solve the system: x + y = 5, 2x - y = 4.
+Find the derivative of f(x) = 3x^2 * sin(x).
+Integrate ∫ (2x + 3) dx from 0 to 4.
+A ball is thrown upward with initial velocity 20 m/s. How high does it go? (g=10)
+A car accelerates from rest at 2 m/s² for 5 seconds. How far does it travel?
+A force of 10 N acts on a mass of 2 kg for 3 seconds. What is the change in velocity?
+A resistor of 10 Ω and another of 20 Ω are in parallel. What is the equivalent resistance?
+A circuit has a 12V battery and two 6Ω resistors in series. What is the current?
+A light bulb has power 60W at 120V. What is its resistance?
+A wave has frequency 50 Hz and wavelength 2 m. What is its speed?
+A sound wave travels at 340 m/s. If its frequency is 170 Hz, what is its wavelength?
+A projectile is launched at 30° with speed 20 m/s. What is its range? (g=10)
+What is the sum of the first 100 natural numbers?
+What is the sum of the squares of the first 10 natural numbers?
+Find the 10th term of the arithmetic sequence 3, 7, 11, ...
+A geometric sequence has first term 2 and common ratio 3. What is the 5th term?
+The sum of an infinite geometric series is 10 and first term is 5. What is the common ratio?
+A person invests $100 at 5% compounded quarterly. How much after 2 years?
+A loan of $1000 is paid back in 12 equal monthly installments at 1% monthly interest. What is the monthly payment?
+A bacteria culture doubles every hour. If it starts with 100 bacteria, how many after 5 hours?
+A radioactive substance decays with half-life 10 years. How much remains after 30 years from 100 g?
+A population grows at 2% per year. How long to double?
+A car's value depreciates 10% per year. After how many years is it worth half?
+A number is 3 more than twice another. Their sum is 18. Find the numbers.
+The difference of two numbers is 5, and their product is 84. Find the numbers.
+A rectangle's length is twice its width. If the perimeter is 30, find area.
+A triangle has angles in ratio 2:3:4. Find the angles.
+A polygon has 10 sides. What is the sum of interior angles?
+How many diagonals does a decagon have?
+A cube has a surface area of 54 cm². What is its volume?
+A cylinder has a volume of 100π cm³ and height 10 cm. What is its radius?
+A sphere has a surface area of 100π cm². What is its radius?
+A cone has a volume of 100π cm³ and radius 5 cm. What is its height?
+A pyramid has a square base of side 6 and height 4. What is its volume?
+A prism has a triangular base with sides 3,4,5 and height 10. What is its volume?
+A circle has area 100π. What is its circumference?
+A sector of a circle with radius 10 has angle 60°. What is its area?
+A chord of a circle subtends an angle of 60° at the center. If the radius is 10, what is the chord length?
+A tangent from a point 10 cm from the center touches a circle of radius 6 cm. How long is the tangent?
+Two circles of radii 5 and 3 have centers 10 apart. Do they intersect?
+A ladder 10 m long leans against a wall. If the foot is 6 m from the wall, how high up is the top?
+A pole casts a shadow 12 m long when the sun's elevation is 30°. How tall is the pole?
+A man observes a tower top at 45° elevation. He moves 20 m closer and sees it at 60°. Find tower height.
+A boat sails at 10 km/h due east, then 10 km/h due north. What is its resultant velocity?
+A vector has components (3,4). What is its magnitude?
+A force of 10 N at 30° and another of 10 N at 60° act on a point. Find resultant magnitude.
+A particle moves along a line with velocity v(t)=3t^2 - 2t. What is its displacement from t=0 to t=2?
+A car accelerates from rest at 2 m/s² for 4 s, then constant speed for 5 s, then decelerates at 1 m/s² to stop. Total distance?
+If a train travels 240 km in 3 hours and then 180 km in 2 hours, what was its average speed for the entire trip?
+I have a list of numbers [4, 7, 1, 9, 3]. If I repeatedly remove the two smallest numbers and add their sum back to the list until one number remains, what is the final number?
+A store gives a 20% discount and then applies a 10% tax. If the original price is €80, what is the final price?
+In a class of 30 students, 18 study math, 12 study physics, and 5 study both. How many study neither subject?
+If I start with $100 and gain 10% one day, lose 10% the next day, and gain 10% the third day, how much money do I end up with?
+What is the next number in the sequence: 2, 6, 7, 21, 22, 66, ?
+A rectangle has a perimeter of 60 cm and the length is twice the width. What are the dimensions?
+Given the Python code for i in range(1,6): total += i*i, what is the final value of total if it started at 0?
+If three workers can finish a task in 12 hours and they work at the same rate, how long would it take six workers?
+You flip a fair coin five times. What is the probability of getting exactly three heads?
+A car travels half the distance at 60 km/h and the other half at 90 km/h. What is the average speed for the whole trip?
+If a password must contain 3 letters followed by 2 digits, how many possible passwords exist?
+I have 5 red balls, 3 blue balls, and 2 green balls in a bag. If I pick two without replacement, what is the probability both are red?
+What is the output of this code: print(sum([i for i in range(10) if i % 3 == 0]))?
+If the sides of a triangle are 7, 24, and 25, is it a right triangle?
+A number doubled plus 8 equals 26. What is the number?
+If you invest €2000 at 5% annual compound interest, how much will it be worth after 3 years?
+In a binary counter starting at 0000, what comes after 0111?
+A company increases salaries by 8% and then cuts them by 5%. If the original salary was €3000, what is the new salary?
+How many ways can you arrange the letters in the word “LEVEL”?
+If a function is defined as f(n) = 3n + 2, what is f(f(4))?
+A tank holds 500 liters of water and is currently 40% full. How many liters must be added to make it 75% full?
+If two dice are rolled, what is the probability that the sum is greater than 9?
+Given the array [5,2,8,1,3], what will it look like after one pass of bubble sort?
+If a clock shows 3:15, what is the angle between the hour and minute hands?
+A sequence follows the rule: multiply by 2, then subtract 1. Starting with 3, what is the 5th term?
+How many edges does a complete graph with 7 vertices have?
+If a program has time complexity O(n²) and n doubles, how does the runtime approximately change?
+If I convert the binary number 101101 to decimal, what number do I get?
+Given the code x = [1,2,3]; x.append(x), what will len(x) be?
+A farmer has chickens and cows totaling 20 animals with 56 legs. How many chickens are there?
+If a router has subnet mask 255.255.255.192, how many usable host addresses exist in each subnet?
+What is the result of evaluating (3 + 5 * 2)^2 - 4?
+A deck of 52 cards is shuffled. What is the probability the first card drawn is a king?
+If a laptop battery drains from 100% to 40% in 3 hours, assuming linear drain, how long does a full charge last?
+What is the missing number: 1, 4, 9, 16, 25, ?
+If a list is reversed twice in Python, what happens to the order of the elements?
+How many bits are required to represent 500 distinct values?
+If a graph has 10 nodes and each node connects to exactly 3 others, how many edges exist?
+If a string “banana” is processed to count unique characters, how many are there?
+What is the output of this code: print("abc"[::-1])?
+If the probability of an event is 0.2, what are the odds in favor of the event?
+In base 8, what is the decimal value of 157?
+If you compress a file from 20 MB to 5 MB, what is the compression ratio?
+If a function calls itself with n-1 until n=0, how many calls happen for n=6?
+What is the next number: 3, 6, 18, 72, 360, ?
+If you randomly shuffle numbers 1 through 5, what is the probability they remain in the same order?
+What is the output of len(set([1,2,2,3,3,3])) in Python?
+If the area of a circle is 314 cm², what is the approximate radius?
+If you divide a network 192.168.1.0/24 into 4 equal subnets, what are the new subnet masks?
+A number is divisible by both 6 and 8. What is the smallest possible positive number?
+If you push numbers 1 through 5 onto a stack and then pop them all, what order do you get?
+If a loop runs from i=1 to i=100 and prints when i%15==0, how many numbers are printed?
+How many diagonals does a polygon with 12 sides have?
+If you hash 1000 items into 100 buckets uniformly, what is the average load per bucket?
+If the determinant of a 2x2 matrix [[a,b],[c,d]] is zero, what relationship must hold?
+What does this code return: list(range(5))[2:]?
+If a computer has 16 GB RAM and uses 30% of it, how many GB are used?
+What is the probability of rolling at least one six with two dice?
+If a graph traversal uses a queue instead of a stack, which algorithm is it likely implementing?
+A program sorts 1 million numbers using O(n log n). Roughly how many comparisons occur?
+If you rotate the array [1,2,3,4,5] right by two positions, what is the result?
+If 5 machines produce 5 parts in 5 minutes, how long for 100 machines to produce 100 parts?
+What is the output of bool([]) in Python?
+If a binary tree has height 4, what is the maximum number of nodes?
+What is the decimal value of hexadecimal FF?
+If the sequence adds consecutive integers starting from 1, what is the sum of the first 100 numbers?
+If an algorithm halves the problem size each step, how many steps for n=1024?
+How many permutations of 4 numbers exist?
+If a function returns n % 2 == 0, what does it check?
+What is the probability of drawing two aces in a row from a deck without replacement?
+If an IPv4 address has prefix /30, how many usable hosts are available?
+What is the output of sum(range(1,5))?
+If a string has length n, how many substrings exist in total?
+What is the next term: 1, 1, 2, 3, 5, 8, ?
+If a queue receives elements A, B, C and two dequeues occur, what element remains at the front?
+If the CPU runs at 3 GHz, approximately how many cycles occur in one millisecond?
+If a password has 8 characters using only digits, how many combinations exist?
+What is the output of sorted([3,1,4,1,5])?
+If you square every number from 1 to 10 and sum them, what is the result?
+What is the smallest prime greater than 50?
+If a graph with 8 vertices is complete, how many edges exist?
+If a function grows as 2^n, how does runtime change when n increases by 1?
+What is the probability of getting exactly two heads in three coin flips?
+If an array has indices 0–9, how many elements does it contain?
+If a network packet is 1500 bytes and the header is 60 bytes, how much payload remains?
+If you convert decimal 45 to binary, what do you get?
+If a class has 40 students and 25 passed the exam, what percentage passed?
+If a process uses 512 MB out of 8 GB RAM, what fraction of memory is used?
+If the sum of three consecutive integers is 72, what are the integers?
+If a loop runs for i in range(10) how many iterations occur?
+If the polynomial x² − 5x + 6 = 0, what are the roots?
+If you repeatedly divide 256 by 2 until reaching 1, how many steps occur?
+If you randomly pick a letter from the word “MISSISSIPPI”, what is the probability it is S?
+What is the output of max([3,7,2,9,5])?
+If the time complexity is O(log n), roughly how many steps for n = 1,000,000?
+If a subnet mask is 255.255.255.0, how many total IP addresses are in the subnet?
+If a number is divisible by 9, what must be true about the sum of its digits?
+If you insert elements 4, 2, 6, 1 into a binary search tree in that order, what is the root?
+If the sum of angles in a polygon is 1440°, how many sides does it have?
+If you roll three dice, what is the probability all show the same number?
