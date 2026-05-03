@@ -23,7 +23,7 @@ Open http://localhost:5173. On first load the model weights download and are cac
 |---|---|
 | UI framework | React 18 + TypeScript |
 | Styling | Tailwind CSS v3 + `@tailwindcss/typography` |
-| LLM inference | `@mlc-ai/web-llm` v0.2.79 via WebGPU |
+| LLM inference | `@mlc-ai/web-llm` v0.2.83 via WebGPU |
 | Icons | `lucide-react` |
 | Markdown rendering | `react-markdown` + `remark-gfm` |
 | Unique IDs | `uuid` |
@@ -35,17 +35,17 @@ Open http://localhost:5173. On first load the model weights download and are cac
 
 ```
 src/
-├── App.tsx                     Main layout: mode picker, sidebar, input form, settings modal
+├── App.tsx                     Main layout: sidebar, input form, settings modal
 ├── main.tsx                    React root mount
 ├── index.css                   Tailwind directives, custom scrollbar, typing-cursor keyframe
 ├── types.ts                    Shared types + worker message protocol (ToWorker / FromWorker)
 ├── engine.worker.ts            Web Worker — runs MLCEngine off the main thread
 ├── hooks/
-│   └── useWebLLM.ts            Custom hook: worker lifecycle, routing, streaming, persistence
+│   └── useWebLLM.ts            Custom hook: worker lifecycle, streaming, persistence
 ├── classifier/
-│   └── router.ts               Trained TF-IDF + logistic regression router (auto-generated)
+│   └── router.ts               Retained for reference — no longer used with Gemma 4
 ├── components/
-│   ├── Sidebar.tsx             Conversation list + dual-model status footer
+│   ├── Sidebar.tsx             Conversation list + model status footer
 │   ├── ChatContainer.tsx       Message list, think-block UI, markdown, copy, scroll
 │   └── SettingsModal.tsx       System prompt editor overlay
 scripts/
@@ -57,67 +57,26 @@ scripts/
 
 ---
 
-## Models
+## Model
 
-The app uses two models simultaneously:
+The app uses a single **Gemma 4** model with native thinking support:
 
-| Constant | Model ID | Purpose |
+| Variant | Model ID | Source |
 |---|---|---|
-| `INSTANT_MODEL` | `gemma-2b-it-q4f32_1-MLC` | Fast, conversational replies (~1.5 GB) |
-| `REASONING_MODEL` | `Qwen3-1.7B-q4f16_1-MLC` | Deep reasoning with `<think>` blocks (~1 GB) |
+| E2B | `gemma-4-E2B-it-q4f16_1-MLC` | `welcoma/gemma-4-E2B-it-q4f16_1-MLC` (community MLC) |
+| E4B | `gemma-4-E4B-it-q4f16_1-MLC` | Not yet publicly available |
 
-Both constants are defined in `src/types.ts`.
+On startup, `navigator.deviceMemory` is checked. If ≥ 6 GB, E4B is selected; otherwise E2B.
 
----
-
-## Mode Picker
-
-Three modes are selectable in the header:
-
-- **⚡ Instant** — always uses the fast Gemma 2B model.
-- **🔀 Auto** — uses the trained classifier in `src/classifier/router.ts` to decide per message which model to use. The routing decision is shown as a badge next to the mode tabs.
-- **🧠 Reasoning** — always uses Qwen3-1.7B with extended thinking.
-
-The selected mode is persisted to `localStorage` under `webllm_mode`.
-
----
-
-## Model Routing Classifier
-
-The Auto mode router is a **TF-IDF + logistic regression** classifier compiled to a single TypeScript file with no runtime dependencies. Inference is a dot product + sigmoid — ~0 ms per message.
-
-### Retrain the classifier
-
-1. Add training examples (one per line) to:
-   - `scripts/data/instant.txt` — conversational/factual questions
-   - `scripts/data/reasoning.txt` — math, coding, multi-step analysis
-2. Run:
-   ```bash
-   pip install scikit-learn numpy
-   python scripts/train_router.py
-   ```
-3. The script prints 5-fold CV accuracy and overwrites `src/classifier/router.ts` with the new weights. Rebuild to apply.
-
-Aim for 100–200 examples per class for reliable accuracy.
-
----
-
-## Background Model Preload
-
-On startup, after the instant model is ready, the app automatically checks whether the reasoning model weights are already in IndexedDB (via `hasModelInCache`). If not, it downloads them silently in a background worker.
-
-Progress is shown in the sidebar footer with a violet progress bar. Both model statuses are always visible there:
-
-- **Instant** — emerald indicator, shows download % during init
-- **Reasoning** — violet indicator, shows preload % with animated progress bar
+The model emits `<think>...</think>` blocks for deep reasoning and responds directly for simple queries — no separate reasoning model is needed.
 
 ---
 
 ## Thinking UI
 
-When the reasoning model responds, it emits a `<think>...</think>` block before the actual answer. The UI:
+When the model responds, it may emit a `<think>...</think>` block before the actual answer. The UI:
 
-- Shows a pulsing 🧠 **"Thinking…"** label and the live thought stream while the model is still inside the `<think>` block
+- Shows a pulsing **"Thinking…"** label and the live thought stream while the model is still inside the `<think>` block
 - Auto-collapses to **"Thought for a moment"** + a chevron once thinking ends
 - Click the label at any time to expand / collapse the thought trace
 - The **Copy** button copies only the final answer, stripping the think block
@@ -130,15 +89,15 @@ When the reasoning model responds, it emits a `<think>...</think>` block before 
 
 The entire WebLLM engine lives in a dedicated Web Worker so the UI thread never freezes.
 
+The worker builds a custom `AppConfig` to load Gemma 4 from its community HuggingFace repo, since the model is not in `@mlc-ai/web-llm`'s prebuilt catalog.
+
 **Message protocol** (`src/types.ts`):
 
 **Main → Worker (`ToWorker`)**
 
 | Message | Purpose |
 |---|---|
-| `{ type: 'init', model }` | Load and compile the initial model |
-| `{ type: 'reload', model }` | Hot-swap to a different model |
-| `{ type: 'preload', model }` | Download a model in the background without switching to it |
+| `{ type: 'init', model }` | Load and compile the model |
 | `{ type: 'generate', id, messages }` | Start a streaming chat completion |
 | `{ type: 'abort' }` | Stop the current stream |
 
@@ -148,38 +107,33 @@ The entire WebLLM engine lives in a dedicated Web Worker so the UI thread never 
 |---|---|
 | `{ type: 'progress', progress, text }` | Download/compile progress 0–100 |
 | `{ type: 'ready', cached }` | Model fully loaded |
-| `{ type: 'preload_progress', model, progress, text }` | Background download progress |
-| `{ type: 'preload_done', model }` | Background download complete |
 | `{ type: 'chunk', id, delta }` | One streaming token |
 | `{ type: 'done', id }` | Generation finished |
 | `{ type: 'error', message }` | Unrecoverable failure |
 
 ### `useWebLLM` hook (`src/hooks/useWebLLM.ts`)
 
+- Detects device RAM and selects the optimal Gemma 4 model on mount.
 - Spawns the worker once on mount, terminates on unmount.
-- Tracks `status`: `'loading' | 'switching' | 'ready' | 'generating' | 'error'`.
-- `switching` state is shown in the header while hot-swapping models; the `generate` call is queued in `pendingGenerateRef` and fires automatically once the new model is ready.
-- `loadedModelRef` tracks which model is currently active in the worker.
+- Tracks `status`: `'loading' | 'ready' | 'generating' | 'error'`.
 - Manages multi-conversation state, persisted to `localStorage` (`webllm_conversations`).
-- `sendMessage` appends a user message, routes it if in Auto mode, switches model if needed, then streams the reply.
+- `sendMessage` appends a user message and streams the reply.
 
 **Exposed fields (selection):**
 
 | Field | Type | Description |
 |---|---|---|
 | `status` | `EngineStatus` | Current engine state |
-| `mode` / `setMode` | `EngineMode` | Selected routing mode |
-| `activeModel` | `string` | Model currently loaded in the worker |
-| `lastRouteDecision` | `'instant' \| 'reasoning' \| null` | Last Auto-mode routing decision |
-| `reasoningCached` | `boolean` | Whether reasoning model weights are in IndexedDB |
-| `preloadProgress` | `number \| null` | Background download progress 0–100 |
-| `preloadText` | `string` | Human-readable preload status text |
+| `activeModel` | `string` | Model currently loaded |
+| `progress` | `number` | Download/compile progress 0–100 |
+| `progressText` | `string` | Human-readable progress text |
+| `conversations` | `Conversation[]` | All saved conversations |
 
 ---
 
 ## Settings
 
-Click the gear icon ⚙ in the sidebar footer to open Settings. Currently exposes:
+Click the gear icon in the sidebar footer to open Settings. Currently exposes:
 
 - **System prompt** — custom instructions prepended to every conversation. Supports multi-line text. Saved to `localStorage` under `webllm_system_prompt`. A Reset button restores the default prompt.
 
@@ -216,8 +170,8 @@ For **production** deployments add these headers in your hosting config (Nginx, 
 
 - **Vite worker format is `'es'`** — required for top-level `await` and ESM imports inside the worker.
 - **`@mlc-ai/web-llm` is excluded from Vite pre-bundling** (`optimizeDeps.exclude`) to avoid double-bundling.
-- **`engine.reload(model)`** only accepts one argument in the installed package version — the init progress callback registered at startup is reused automatically.
+- **Custom `appConfig`** — the worker constructs an `AppConfig` with the HuggingFace repo URL and WASM library path so `@mlc-ai/web-llm` can load Gemma 4 from `welcoma/` (community MLC, not the official `mlc-ai` catalog).
+- **RAM-based model selection** — `navigator.deviceMemory` determines the Gemma 4 variant at startup. E4B is selected for ≥6 GB devices.
 - **`ToWorker` / `FromWorker` unions** in `types.ts` are the single source of truth for the worker protocol.
 - **Conversation persistence:** messages are saved to `localStorage` after each `done` event.
 - **Streaming cursor** is a pure-CSS `::after` pseudo-element with a blink keyframe (`typing-cursor` class in `index.css`).
-

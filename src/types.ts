@@ -58,36 +58,35 @@ export interface WorkerChatMessage {
 }
 
 export type ToWorker =
-  | { type: 'init'; model: string }
-  | { type: 'reload'; model: string }
-  | { type: 'preload'; model: string }   // background download, keeps active engine intact
+  | { type: 'init'; model: string; appConfig?: Record<string, unknown> }
   | { type: 'generate'; id: string; messages: WorkerChatMessage[] }
   | { type: 'abort' };
 
 export type FromWorker =
   | { type: 'progress'; progress: number; text: string }
   | { type: 'ready'; cached: boolean }
-  | { type: 'preload_progress'; model: string; progress: number; text: string }
-  | { type: 'preload_done'; model: string }
   | { type: 'chunk'; id: string; delta: string }
   | { type: 'done'; id: string }
   | { type: 'error'; message: string };
 
 // ── Vision model list ─────────────────────────────────────────────────────────
 
-/** Models in @mlc-ai/web-llm 0.2.79 that accept image content parts. */
+/** Models in @mlc-ai/web-llm that accept image content parts. */
 export const VISION_MODELS: readonly string[] = [
   'Phi-3.5-vision-instruct-q4f16_1-MLC',
   'Phi-3.5-vision-instruct-q4f32_1-MLC',
 ];
 
-// ── Preset model IDs ─────────────────────────────────────────────────────────
+// ── Gemma 4 model IDs ────────────────────────────────────────────────────────
 
-export const INSTANT_MODEL = 'gemma-2b-it-q4f32_1-MLC';
-export const REASONING_MODEL = 'Qwen3-1.7B-q4f16_1-MLC';
+export const GEMMA4_E2B_MODEL_ID = 'gemma-4-E2B-it-q4f16_1-MLC';
+export const GEMMA4_E4B_MODEL_ID = 'gemma-4-E4B-it-q4f16_1-MLC';
 
-// ── Mode ─────────────────────────────────────────────────────────────────────
-
-/** "instant" uses the fast model, "reasoning" uses the reasoning model,
- *  "auto" routes each message based on complexity heuristics. */
-export type EngineMode = 'instant' | 'auto' | 'reasoning';
+/** Select the best Gemma 4 model for the current device based on RAM. */
+export function selectGemma4Model(): string {
+  const memoryGB = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
+  if (memoryGB !== undefined && memoryGB >= 6) {
+    return GEMMA4_E4B_MODEL_ID;
+  }
+  return GEMMA4_E2B_MODEL_ID;
+}

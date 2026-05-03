@@ -13,15 +13,36 @@
  *
  *   Cross-Origin-Opener-Policy:   same-origin
  *   Cross-Origin-Embedder-Policy: require-corp
- *‚
+ *
  * The Vite dev-server already sends these (see vite.config.ts).
  * You MUST replicate this in your production server / CDN config.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 import { CreateMLCEngine } from '@mlc-ai/web-llm';
-import type { MLCEngine, InitProgressReport } from '@mlc-ai/web-llm';
+import type { MLCEngine, InitProgressReport, AppConfig } from '@mlc-ai/web-llm';
 import type { ToWorker, FromWorker } from './types';
+import { GEMMA4_E2B_MODEL_ID, GEMMA4_E4B_MODEL_ID } from './types';
+
+// ── Gemma 4 model definitions (custom HuggingFace repos) ─────────────────────
+
+const E2B_REPO = 'https://huggingface.co/welcoma/gemma-4-E2B-it-q4f16_1-MLC';
+const E4B_REPO = 'https://huggingface.co/welcoma/gemma-4-E4B-it-q4f16_1-MLC';
+
+function buildAppConfig(modelId: string): AppConfig {
+  const repo = modelId === GEMMA4_E4B_MODEL_ID ? E4B_REPO : E2B_REPO;
+  const libName = `${modelId}-webgpu.wasm`;
+  return {
+    model_list: [
+      {
+        model: repo,
+        model_id: modelId,
+        model_lib: `${repo}/resolve/main/libs/${libName}`,
+        required_features: ['shader-f16'],
+      },
+    ],
+  };
+}
 
 // ── State ────────────────────────────────────────────────────────────────────
 
@@ -46,8 +67,10 @@ self.onmessage = async (event: MessageEvent<ToWorker>) => {
     // ── Initialise the engine (download + compile) ─────────────────────────
     case 'init': {
       try {
+        const appConfig = (msg.appConfig as AppConfig | undefined) ?? buildAppConfig(msg.model);
         engine = await CreateMLCEngine(msg.model, {
           initProgressCallback: progressCb,
+          appConfig,
         });
         self.postMessage({ type: 'ready', cached: true } satisfies FromWorker);
       } catch (err) {
@@ -55,55 +78,6 @@ self.onmessage = async (event: MessageEvent<ToWorker>) => {
           type: 'error',
           message: err instanceof Error ? err.message : String(err),
         } satisfies FromWorker);
-      }
-      break;
-    }
-
-    // ── Hot-swap model (reuses IndexedDB cache when available) ─────────────
-    case 'reload': {
-      if (!engine) {
-        self.postMessage({
-          type: 'error',
-          message: 'Engine not initialised — cannot reload.',
-        } satisfies FromWorker);
-        break;
-      }
-      try {
-        await engine.reload(msg.model);
-        self.postMessage({ type: 'ready', cached: true } satisfies FromWorker);
-      } catch (err) {
-        self.postMessage({
-          type: 'error',
-          message: err instanceof Error ? err.message : String(err),
-        } satisfies FromWorker);
-      }
-      break;
-    }
-
-    // ── Background pre-download: fetch weights without swapping the active engine ─
-    case 'preload': {
-      const preloadModel = msg.model;
-      try {
-        // Create a temporary throw-away engine solely to trigger the download and
-        // cache the weights into IndexedDB. We then unload it immediately so the
-        // active engine keeps its GPU memory.
-        const tmp = await CreateMLCEngine(preloadModel, {
-          initProgressCallback: (report: InitProgressReport) => {
-            self.postMessage({
-              type: 'preload_progress',
-              model: preloadModel,
-              progress: Math.round(report.progress * 100),
-              text: report.text,
-            } satisfies FromWorker);
-          },
-        });
-        // Unload GPU resources of the temp engine without destroying the main engine.
-        await tmp.unload();
-        self.postMessage({ type: 'preload_done', model: preloadModel } satisfies FromWorker);
-      } catch (err) {
-        // Preload failures are non-fatal — just log, don't crash the worker.
-        console.warn('[preload] failed for', preloadModel, err);
-        self.postMessage({ type: 'preload_done', model: preloadModel } satisfies FromWorker);
       }
       break;
     }
@@ -111,11 +85,10 @@ self.onmessage = async (event: MessageEvent<ToWorker>) => {
     // ── Stream a chat completion ───────────────────────────────────────────
     case 'generate': {
       if (!engine) {
-        const response: FromWorker = {
+        self.postMessage({
           type: 'error',
           message: 'Engine is not initialised yet.',
-        };
-        self.postMessage(response);
+        } satisfies FromWorker);
         return;
       }
 
@@ -128,6 +101,9 @@ self.onmessage = async (event: MessageEvent<ToWorker>) => {
           stream: true,
           temperature: 0.7,
           top_p: 0.95,
+          extra_body: {
+            enable_thinking: true,
+          },
         });
 
         for await (const chunk of stream) {
@@ -135,20 +111,16 @@ self.onmessage = async (event: MessageEvent<ToWorker>) => {
 
           const delta = chunk.choices[0]?.delta?.content ?? '';
           if (delta) {
-            const response: FromWorker = { type: 'chunk', id: msg.id, delta };
-            self.postMessage(response);
+            self.postMessage({ type: 'chunk', id: msg.id, delta } satisfies FromWorker);
           }
         }
       } catch (err) {
-        const response: FromWorker = {
+        self.postMessage({
           type: 'error',
           message: err instanceof Error ? err.message : String(err),
-        };
-        self.postMessage(response);
+        } satisfies FromWorker);
       } finally {
-        // Always signal completion so the hook can reset status.
-        const response: FromWorker = { type: 'done', id: msg.id };
-        self.postMessage(response);
+        self.postMessage({ type: 'done', id: msg.id } satisfies FromWorker);
         abortRequested = false;
       }
       break;

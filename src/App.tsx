@@ -12,7 +12,6 @@ import {
   Square,
   PanelLeftClose,
   PanelLeftOpen,
-  Zap,
   Bot,
   AlertTriangle,
   Paperclip,
@@ -25,7 +24,6 @@ import { Sidebar } from './components/Sidebar';
 import { ChatContainer } from './components/ChatContainer';
 import { SettingsModal } from './components/SettingsModal';
 import type { MessageAttachment } from './types';
-import { VISION_MODELS } from './types';
 
 import * as pdfjsLib from 'pdfjs-dist';
 // @ts-ignore
@@ -54,7 +52,6 @@ export default function App() {
     progress,
     progressText,
     modelCached,
-    isVisionModel,
     conversations,
     activeConversationId,
     currentMessages,
@@ -69,13 +66,7 @@ export default function App() {
     error,
     systemPrompt,
     setSystemPrompt,
-    mode,
-    setMode,
-    lastRouteDecision,
     activeModel,
-    reasoningCached,
-    preloadProgress,
-    preloadText,
   } = useWebLLM(DEFAULT_MODEL);
 
   const [input, setInput] = useState('');
@@ -85,7 +76,6 @@ export default function App() {
   const [isListening, setIsListening] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  // Holds the input text that existed before speech recognition started
   const baseInputRef = useRef('');
 
   // Auto-resize the textarea as the user types
@@ -110,7 +100,6 @@ export default function App() {
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    // Submit on Enter; Shift+Enter inserts a newline
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSubmit();
@@ -120,7 +109,7 @@ export default function App() {
   // ── File upload ──────────────────────────────────────────────────────────
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
-    
+
     for (const file of files) {
       if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
         try {
@@ -146,7 +135,6 @@ export default function App() {
         reader.readAsText(file);
       }
     }
-    // Reset so the same file can be re-selected
     e.target.value = '';
   };
 
@@ -165,7 +153,6 @@ export default function App() {
     }
 
     if (isListening) {
-      // Stop current session — onend will setIsListening(false)
       (window as unknown as { _sr?: ISpeechRecognition })._sr?.stop();
       return;
     }
@@ -208,12 +195,13 @@ export default function App() {
   };
 
   const isLoading = status === 'loading';
-  const isSwitching = status === 'switching';
   const isGenerating = status === 'generating';
   const isError = status === 'error';
   const canSend = status === 'ready' && (
     input.trim().length > 0 || attachedFiles.length > 0
   );
+
+  const modelLabel = activeModel.includes('E4B') ? 'Gemma 4 E4B' : 'Gemma 4 E2B';
 
   return (
     <>
@@ -224,15 +212,12 @@ export default function App() {
           conversations={conversations}
           activeConversationId={activeConversationId}
           modelCached={modelCached}
-          modelName={DEFAULT_MODEL}
+          modelName={activeModel}
           onNewChat={startNewChat}
           onLoadConversation={loadConversation}
           onDeleteConversation={deleteConversation}
           onRenameConversation={renameConversation}
           onOpenSettings={() => setSettingsOpen(true)}
-          reasoningCached={reasoningCached}
-          preloadProgress={preloadProgress}
-          preloadText={preloadText}
         />
       )}
 
@@ -251,58 +236,15 @@ export default function App() {
             }
           </button>
 
-          {/* ── Mode picker ────────────────────────────────── */}
-          <div className="flex items-center bg-[#2f2f2f] rounded-xl p-1 gap-1 ml-2">
-            {(['instant', 'auto', 'reasoning'] as const).map(m => {
-              const labels: Record<typeof m, string> = {
-                instant:   'Instant',
-                auto:      'Auto',
-                reasoning: 'Reasoning',
-              };
-              return (
-                <button
-                  key={m}
-                  onClick={() => setMode(m)}
-                  disabled={isLoading}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150
-                    disabled:opacity-40 disabled:cursor-not-allowed
-                    ${
-                      mode === m
-                        ? 'bg-[#444] text-[#ececec] shadow-sm'
-                        : 'text-[#8e8ea0] hover:text-[#ececec]'
-                    }`}
-                >
-                  {labels[m]}
-                </button>
-              );
-            })}
-          </div>
+          <span className="text-sm font-medium text-[#adadbe] ml-2">{modelLabel}</span>
 
-          {/* Route badge — shows which model handled the last message in auto mode */}
-          {mode === 'auto' && lastRouteDecision && !isLoading && !isSwitching && (
-            <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium border
-              ${
-                lastRouteDecision === 'reasoning'
-                  ? 'text-violet-300 border-violet-500/40 bg-violet-500/10'
-                  : 'text-emerald-300 border-emerald-500/40 bg-emerald-500/10'
-              }`}
-            >
-              → {lastRouteDecision === 'reasoning' ? 'Reasoning' : 'Instant'}
-            </span>
-          )}
-
-          {/* Compact progress pill — initial load or model switch */}
-          {(isLoading || isSwitching) && (
+          {/* Progress pill — initial load */}
+          {isLoading && (
             <div className="ml-auto flex items-center gap-2 text-xs text-[#8e8ea0]">
-              {isSwitching && (
-                <span className="text-violet-300">
-                  Switching…
-                </span>
-              )}
               <div className="w-24 h-1.5 bg-[#2a2a2a] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-emerald-500 rounded-full transition-all duration-300"
-                  style={{ width: `${isSwitching ? progress : progress}%` }}
+                  style={{ width: `${progress}%` }}
                 />
               </div>
               <span>{progress}%</span>
@@ -314,11 +256,10 @@ export default function App() {
         {isLoading && (
           <div className="flex flex-col items-center justify-center flex-1 gap-8 px-6">
             <div className="text-center space-y-3">
-              {/* Animated icon */}
               <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center mx-auto animate-pulse">
-                <Zap size={24} className="text-[#212121]" />
+                <Bot size={24} className="text-[#212121]" />
               </div>
-              <h2 className="text-xl font-semibold">Loading Gemma&nbsp;2B</h2>
+              <h2 className="text-xl font-semibold">Loading {modelLabel}</h2>
               <p className="text-sm text-[#8e8ea0] max-w-xs mx-auto">
                 Running 100% locally in your browser via WebGPU.
                 <br />No data is ever sent to a server.
@@ -376,7 +317,7 @@ export default function App() {
                 <h1 className="text-2xl font-semibold tracking-tight text-[#ececec]">
                   What can I help with?
                 </h1>
-                
+
                 {/* Suggested prompts */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 max-w-2xl w-full">
                   {SUGGESTED_PROMPTS.map(p => (
@@ -438,8 +379,6 @@ export default function App() {
                     </div>
                   )}
 
-                  {/* Image previews */}
-                  {/* Vision warning */}
                   <div className="flex items-end gap-2 px-4 py-3">
                     {/* Hidden file input */}
                     <input
@@ -455,7 +394,7 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      disabled={isLoading || isSwitching || isError}
+                      disabled={isLoading || isError}
                       className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full text-[#ececec] bg-transparent
                                  hover:bg-[#3a3a3a] transition-colors disabled:opacity-30
                                  disabled:cursor-not-allowed mb-0.5 mr-2"
@@ -469,9 +408,9 @@ export default function App() {
                       value={input}
                       onChange={e => setInput(e.target.value)}
                       onKeyDown={handleKeyDown}
-                      placeholder={isSwitching ? 'Switching model…' : 'Message WebLLM...'}
+                      placeholder="Message Gemma 4…"
                       rows={1}
-                      disabled={isLoading || isSwitching || isError}
+                      disabled={isLoading || isError}
                       className="flex-1 bg-transparent text-[15px] pt-1.5 text-[#ececec] placeholder-[#8e8ea0]
                                  resize-none outline-none leading-relaxed
                                  min-h-[24px] max-h-[200px] overflow-y-auto mb-0.5"
@@ -481,7 +420,7 @@ export default function App() {
                     <button
                       type="button"
                       onClick={handleMicClick}
-                      disabled={isLoading || isSwitching || isError || isGenerating}
+                      disabled={isLoading || isError || isGenerating}
                       className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-full transition-colors mr-1 mb-0.5
                                   disabled:opacity-30 disabled:cursor-not-allowed
                                   ${
@@ -523,7 +462,7 @@ export default function App() {
                 </div>
 
                 <p className="mt-3 text-center text-xs text-[#8e8ea0]">
-                  WebLLM can make mistakes. All inference happens locally in your browser.
+                  Gemma 4 runs locally in your browser. No data leaves your device.
                 </p>
               </form>
             </div>
