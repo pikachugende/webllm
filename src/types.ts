@@ -79,12 +79,4 @@ export const VISION_MODELS: readonly string[] = [
   'Phi-3.5-vision-instruct-q4f32_1-MLC',
 ];
 
-// ── Gemma 4 model IDs ────────────────────────────────────────────────────────
 
-export const GEMMA4_E2B_MODEL_ID = 'gemma-4-E2B-it-q4f16_1-MLC';
-export const GEMMA4_E4B_MODEL_ID = 'gemma-4-E4B-it-q4f16_1-MLC';
-
-/** Select the best Gemma 4 model for the current device based on RAM. */
-export function selectGemma4Model(): string {
-  return GEMMA4_E2B_MODEL_ID;
-}

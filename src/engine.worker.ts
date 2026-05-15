@@ -22,36 +22,6 @@
 import { CreateMLCEngine, prebuiltAppConfig } from '@mlc-ai/web-llm';
 import type { MLCEngine, InitProgressReport, AppConfig } from '@mlc-ai/web-llm';
 import type { ToWorker, FromWorker } from './types';
-import { GEMMA4_E2B_MODEL_ID, GEMMA4_E4B_MODEL_ID } from './types';
-
-// ── Gemma 4 model definitions (custom HuggingFace repos) ─────────────────────
-
-const E2B_REPO = 'https://huggingface.co/welcoma/gemma-4-E2B-it-q4f16_1-MLC';
-const E4B_REPO = 'https://huggingface.co/welcoma/gemma-4-E4B-it-q4f16_1-MLC';
-
-function buildAppConfig(modelId: string): AppConfig | null {
-  if (modelId !== GEMMA4_E2B_MODEL_ID && modelId !== GEMMA4_E4B_MODEL_ID) {
-    return null;
-  }
-
-  const repo = modelId === GEMMA4_E4B_MODEL_ID ? E4B_REPO : E2B_REPO;
-  const libName = `${modelId}-webgpu.wasm`;
-  return {
-    cacheBackend: 'indexeddb',
-    model_list: [
-      {
-        model: repo,
-        model_id: modelId,
-        model_lib: `${repo}/resolve/main/libs/${libName}`,
-        required_features: ['shader-f16'],
-        overrides: {
-          context_window_size: -1,
-          sliding_window_size: 512,
-        },
-      },
-    ],
-  };
-}
 
 function buildPrebuiltConfig(): AppConfig {
   return {
@@ -99,7 +69,6 @@ self.onmessage = async (event: MessageEvent<ToWorker>) => {
 
         const appConfig =
           (msg.appConfig as AppConfig | undefined) ??
-          buildAppConfig(msg.model) ??
           buildPrebuiltConfig();
         const engineConfig = {
           initProgressCallback: progressCb,

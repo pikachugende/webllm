@@ -1,5 +1,3 @@
-import { GEMMA4_E2B_MODEL_ID } from './types';
-
 export interface ModelOption {
   id: string;
   label: string;
@@ -16,14 +14,6 @@ export const QWEN3_4B_MODEL_ID = 'Qwen3-4B-q4f16_1-MLC';
 export const QWEN3_8B_MODEL_ID = 'Qwen3-8B-q4f16_1-MLC';
 
 export const MODEL_CATALOG: readonly ModelOption[] = [
-  {
-    id: GEMMA4_E2B_MODEL_ID,
-    label: 'Gemma 4 E2B',
-    shortLabel: 'Gemma 4 E2B',
-    minRamGB: 6,
-    source: 'custom',
-    description: 'Most capable option with native thinking.',
-  },
   {
     id: QWEN3_8B_MODEL_ID,
     label: 'Qwen3 8B',
@@ -70,7 +60,7 @@ export function getModelLabel(modelId: string | null | undefined): string {
 export function getRecommendedModelId(memoryGB?: number): string | null {
   if (!memoryGB) return null;
   if (memoryGB >= 8) return QWEN3_8B_MODEL_ID;
-  if (memoryGB >= 6) return GEMMA4_E2B_MODEL_ID;
+  if (memoryGB >= 6) return QWEN3_4B_MODEL_ID;
   if (memoryGB >= 4) return QWEN3_1_7B_MODEL_ID;
   return QWEN3_0_6B_MODEL_ID;
 }
