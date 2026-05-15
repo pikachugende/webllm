@@ -2,6 +2,8 @@
 
 export type MessageRole = 'user' | 'assistant' | 'system';
 
+export type ThinkingMode = 'instant' | 'thinking' | 'auto';
+
 export interface MessageAttachment {
   /** Original file name */
   name: string;
@@ -59,7 +61,7 @@ export interface WorkerChatMessage {
 
 export type ToWorker =
   | { type: 'init'; model: string; appConfig?: Record<string, unknown> }
-  | { type: 'generate'; id: string; messages: WorkerChatMessage[] }
+  | { type: 'generate'; id: string; messages: WorkerChatMessage[]; enableThinking?: boolean | null }
   | { type: 'abort' };
 
 export type FromWorker =
@@ -84,9 +86,5 @@ export const GEMMA4_E4B_MODEL_ID = 'gemma-4-E4B-it-q4f16_1-MLC';
 
 /** Select the best Gemma 4 model for the current device based on RAM. */
 export function selectGemma4Model(): string {
-  const memoryGB = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
-  if (memoryGB !== undefined && memoryGB >= 6) {
-    return GEMMA4_E4B_MODEL_ID;
-  }
   return GEMMA4_E2B_MODEL_ID;
 }

@@ -6,7 +6,7 @@ interface SidebarProps {
   conversations: Conversation[];
   activeConversationId: string | null;
   modelCached: boolean;
-  modelName: string;
+  modelLabel: string;
   onNewChat: () => void;
   onLoadConversation: (id: string) => void;
   onDeleteConversation: (id: string) => void;
@@ -18,7 +18,7 @@ export function Sidebar({
   conversations,
   activeConversationId,
   modelCached,
-  modelName,
+  modelLabel,
   onNewChat,
   onLoadConversation,
   onDeleteConversation,
@@ -55,8 +55,6 @@ export function Sidebar({
     if (e.key === 'Enter') handleSaveEdit(id);
     if (e.key === 'Escape') setEditingId(null);
   };
-
-  const displayName = modelName.includes('E4B') ? 'Gemma 4 E4B' : 'Gemma 4 E2B';
 
   return (
     <aside className="w-72 md:w-80 shrink-0 bg-[#171717] flex flex-col border-r border-[#2a2a2a]">
@@ -171,7 +169,7 @@ export function Sidebar({
           ) : (
             <HardDrive size={13} className="text-[#6e6e80] shrink-0" />
           )}
-          <span className="truncate">{displayName}</span>
+          <span className="truncate">{modelLabel}</span>
         </div>
 
         {/* Settings */}

@@ -19,7 +19,7 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-import { CreateMLCEngine } from '@mlc-ai/web-llm';
+import { CreateMLCEngine, prebuiltAppConfig } from '@mlc-ai/web-llm';
 import type { MLCEngine, InitProgressReport, AppConfig } from '@mlc-ai/web-llm';
 import type { ToWorker, FromWorker } from './types';
 import { GEMMA4_E2B_MODEL_ID, GEMMA4_E4B_MODEL_ID } from './types';
@@ -29,10 +29,15 @@ import { GEMMA4_E2B_MODEL_ID, GEMMA4_E4B_MODEL_ID } from './types';
 const E2B_REPO = 'https://huggingface.co/welcoma/gemma-4-E2B-it-q4f16_1-MLC';
 const E4B_REPO = 'https://huggingface.co/welcoma/gemma-4-E4B-it-q4f16_1-MLC';
 
-function buildAppConfig(modelId: string): AppConfig {
+function buildAppConfig(modelId: string): AppConfig | null {
+  if (modelId !== GEMMA4_E2B_MODEL_ID && modelId !== GEMMA4_E4B_MODEL_ID) {
+    return null;
+  }
+
   const repo = modelId === GEMMA4_E4B_MODEL_ID ? E4B_REPO : E2B_REPO;
   const libName = `${modelId}-webgpu.wasm`;
   return {
+    cacheBackend: 'indexeddb',
     model_list: [
       {
         model: repo,
@@ -41,6 +46,13 @@ function buildAppConfig(modelId: string): AppConfig {
         required_features: ['shader-f16'],
       },
     ],
+  };
+}
+
+function buildPrebuiltConfig(): AppConfig {
+  return {
+    ...prebuiltAppConfig,
+    cacheBackend: 'indexeddb',
   };
 }
 
@@ -67,11 +79,27 @@ self.onmessage = async (event: MessageEvent<ToWorker>) => {
     // ── Initialise the engine (download + compile) ─────────────────────────
     case 'init': {
       try {
-        const appConfig = (msg.appConfig as AppConfig | undefined) ?? buildAppConfig(msg.model);
-        engine = await CreateMLCEngine(msg.model, {
+        const hasWorkerWebGPU = Boolean((self as typeof self & { navigator?: Navigator }).navigator?.gpu);
+        self.postMessage({
+          type: 'progress',
+          progress: 0,
+          text: hasWorkerWebGPU
+            ? 'Starting model initialisation…'
+            : 'WebGPU is not available in the worker context.',
+        } satisfies FromWorker);
+        if (!hasWorkerWebGPU) {
+          throw new Error('WebGPU is not available in the worker context.');
+        }
+
+        const appConfig =
+          (msg.appConfig as AppConfig | undefined) ??
+          buildAppConfig(msg.model) ??
+          buildPrebuiltConfig();
+        const engineConfig = {
           initProgressCallback: progressCb,
-          appConfig,
-        });
+          ...(appConfig ? { appConfig } : {}),
+        };
+        engine = await CreateMLCEngine(msg.model, engineConfig);
         self.postMessage({ type: 'ready', cached: true } satisfies FromWorker);
       } catch (err) {
         self.postMessage({
@@ -95,15 +123,18 @@ self.onmessage = async (event: MessageEvent<ToWorker>) => {
       abortRequested = false;
 
       try {
+        const extraBody =
+          typeof msg.enableThinking === 'boolean'
+            ? { enable_thinking: msg.enableThinking }
+            : undefined;
+
         const stream = await engine.chat.completions.create({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           messages: msg.messages as any,
           stream: true,
           temperature: 0.7,
           top_p: 0.95,
-          extra_body: {
-            enable_thinking: true,
-          },
+          extra_body: extraBody,
         });
 
         for await (const chunk of stream) {

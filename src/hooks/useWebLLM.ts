@@ -2,7 +2,7 @@
  * useWebLLM.ts
  *
  * Custom hook that:
- *  – Detects device RAM and selects the optimal Gemma 4 model
+ *  – Spawns the WebLLM Web Worker (engine.worker.ts) for a selected model
  *  – Spawns the WebLLM Web Worker (engine.worker.ts)
  *  – Tracks model load progress (0 → 100 %)
  *  – Manages multi-conversation state persisted to localStorage
@@ -19,12 +19,16 @@ import type {
   FromWorker,
   WorkerChatMessage,
   ContentPart,
+  ThinkingMode,
 } from '../types';
-import { VISION_MODELS, selectGemma4Model } from '../types';
+import { VISION_MODELS } from '../types';
+import { classify } from '../classifier/router';
+import { getModelLabel } from '../models';
 
 // ── Public surface ────────────────────────────────────────────────────────────
 
 export type EngineStatus =
+  | 'idle'        // waiting for model selection
   | 'loading'     // initial model download / compile
   | 'ready'       // idle, waiting for user input
   | 'generating'  // streaming a response
@@ -54,12 +58,10 @@ export interface UseWebLLMReturn {
   systemPrompt: string;
   setSystemPrompt: (prompt: string) => void;
   /** The model ID currently loaded in the worker */
-  activeModel: string;
+  activeModel: string | null;
 }
 
 // ── Constants ─────────────────────────────────────────────────────────────────
-
-export const DEFAULT_MODEL = selectGemma4Model();
 
 const LS_KEY = 'webllm_conversations';
 const LS_PROMPT_KEY = 'webllm_system_prompt';
@@ -87,6 +89,28 @@ function titleFromContent(content: string): string {
   return words.length > 6 ? title + '…' : title;
 }
 
+function resolveEnableThinking(mode: ThinkingMode, text: string): boolean {
+  if (mode === 'thinking') return true;
+  if (mode === 'instant') return false;
+
+  const cleaned = text.trim();
+  if (!cleaned) return true;
+
+  const lower = cleaned.toLowerCase();
+  const wordCount = cleaned.split(/\s+/).length;
+  const questionCount = (cleaned.match(/\?/g) ?? []).length;
+  const hasCode = /```|\bfunction\b|\bclass\b|\bconsole\.log\b|\bdef\b|\bimport\b/.test(lower);
+  const hasMath = /[=^*/]|\bprove\b|\bderive\b|\bformula\b|\btheorem\b/.test(lower);
+  const thinkingCue = /step by step|reason|analy|debug|design|architecture|tradeoff|complexity|optimi|implement/.test(lower);
+  const instantCue = /\bdefine\b|\bwhat is\b|\bwho is\b|\bsummarize\b|\btranslate\b|\blist\b|\bquick\b/.test(lower);
+
+  if (hasCode || hasMath || thinkingCue) return true;
+  if (instantCue && wordCount <= 12 && questionCount <= 1) return false;
+  if (wordCount >= 40 || questionCount >= 2) return true;
+
+  return classify(cleaned) === 'reasoning';
+}
+
 /** Build the full text sent to the LLM, combining user text with file attachments. */
 function buildLLMContent(msg: Message): string | ContentPart[] {
   if (!msg.attachments?.length) return msg.content;
@@ -98,14 +122,19 @@ function buildLLMContent(msg: Message): string | ContentPart[] {
 
 // ── Hook ─────────────────────────────────────────────────────────────────────
 
-export function useWebLLM(model: string = DEFAULT_MODEL): UseWebLLMReturn {
+export function useWebLLM(
+  model: string | null,
+  thinkingMode: ThinkingMode = 'auto',
+): UseWebLLMReturn {
   // ─ Worker ─
   const workerRef = useRef<Worker | null>(null);
 
   // ─ Engine state ─
-  const [status, setStatus] = useState<EngineStatus>('loading');
+  const [status, setStatus] = useState<EngineStatus>(model ? 'loading' : 'idle');
   const [progress, setProgress] = useState(0);
-  const [progressText, setProgressText] = useState('Initialising Gemma 4…');
+  const [progressText, setProgressText] = useState(
+    model ? `Initialising ${getModelLabel(model)}…` : 'Select a model to begin',
+  );
   const [modelCached, setModelCached] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -127,7 +156,11 @@ export function useWebLLM(model: string = DEFAULT_MODEL): UseWebLLMReturn {
     setSystemPromptState(p);
   }, []);
 
-  const [activeModel] = useState<string>(model);
+  const [activeModel, setActiveModel] = useState<string | null>(model ?? null);
+
+  useEffect(() => {
+    setActiveModel(model ?? null);
+  }, [model]);
 
   // ─ Refs to avoid stale closures inside the worker message handler ─
   const pendingIdRef = useRef<string | null>(null);
@@ -143,6 +176,21 @@ export function useWebLLM(model: string = DEFAULT_MODEL): UseWebLLMReturn {
 
   // ─ Worker initialisation ─────────────────────────────────────────────────
   useEffect(() => {
+    if (!model) {
+      setStatus('idle');
+      setProgress(0);
+      setProgressText('Select a model to begin');
+      setModelCached(false);
+      setError(null);
+      return () => undefined;
+    }
+
+    setStatus('loading');
+    setProgress(0);
+    setProgressText(`Initialising ${getModelLabel(model)}…`);
+    setModelCached(false);
+    setError(null);
+
     const worker = new Worker(
       new URL('../engine.worker.ts', import.meta.url),
       { type: 'module' },
@@ -274,12 +322,13 @@ export function useWebLLM(model: string = DEFAULT_MODEL): UseWebLLMReturn {
         type: 'generate',
         id: assistantId,
         messages: [{ role: 'system', content: systemPromptRef.current }, ...history],
+        enableThinking: resolveEnableThinking(thinkingMode, trimmed),
       };
 
       setStatus('generating');
       workerRef.current.postMessage(generateMsg);
     },
-    [status],
+    [status, thinkingMode],
   );
 
   const editMessage = useCallback((id: string, newText: string) => {
@@ -313,11 +362,12 @@ export function useWebLLM(model: string = DEFAULT_MODEL): UseWebLLMReturn {
       type: 'generate',
       id: assistantId,
       messages: [{ role: 'system', content: systemPromptRef.current }, ...history],
+      enableThinking: resolveEnableThinking(thinkingMode, trimmed),
     };
 
     setStatus('generating');
     workerRef.current.postMessage(generateMsg);
-  }, [status]);
+  }, [status, thinkingMode]);
 
   const stopGeneration = useCallback(() => {
     workerRef.current?.postMessage({ type: 'abort' } satisfies ToWorker);
@@ -388,19 +438,24 @@ export function useWebLLM(model: string = DEFAULT_MODEL): UseWebLLMReturn {
       .filter(m => m.id !== assistantId)
       .map(m => ({ role: m.role as 'user' | 'assistant', content: buildLLMContent(m) }));
 
+    const lastUserText = messages[lastUserIdx]?.content ?? '';
+
     workerRef.current.postMessage({
       type: 'generate',
       id: assistantId,
       messages: [{ role: 'system', content: systemPromptRef.current }, ...history],
+      enableThinking: resolveEnableThinking(thinkingMode, lastUserText),
     } satisfies ToWorker);
-  }, [status]);
+  }, [status, thinkingMode]);
+
+  const isVisionModel = activeModel ? VISION_MODELS.includes(activeModel) : false;
 
   return {
     status,
     progress,
     progressText,
     modelCached,
-    isVisionModel: VISION_MODELS.includes(activeModel),
+    isVisionModel,
     conversations,
     activeConversationId,
     currentMessages,

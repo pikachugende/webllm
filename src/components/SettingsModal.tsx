@@ -6,11 +6,18 @@ const DEFAULT_SYSTEM_PROMPT = `You are a helpful, accurate, and concise AI assis
 interface SettingsModalProps {
   open: boolean;
   systemPrompt: string;
+  onChangeModel: () => void;
   onSave: (prompt: string) => void;
   onClose: () => void;
 }
 
-export function SettingsModal({ open, systemPrompt, onSave, onClose }: SettingsModalProps) {
+export function SettingsModal({
+  open,
+  systemPrompt,
+  onChangeModel,
+  onSave,
+  onClose,
+}: SettingsModalProps) {
   const [draft, setDraft] = useState(systemPrompt);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -60,6 +67,27 @@ export function SettingsModal({ open, systemPrompt, onSave, onClose }: SettingsM
 
         {/* Body */}
         <div className="px-5 py-5 space-y-4 overflow-y-auto">
+          {/* Model Selection */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-[#ececec]">
+              Model
+            </label>
+            <p className="text-xs text-[#6e6e80]">
+              Switch to a different model. The new model will download on first use.
+            </p>
+            <button
+              onClick={() => {
+                onClose();
+                onChangeModel();
+              }}
+              className="px-3 py-2 rounded-lg text-xs font-medium border border-[#3a3a3a]
+                         bg-[#2a2a2a] text-[#ececec] hover:border-[#4a4a4a]
+                         transition-colors"
+            >
+              Change model
+            </button>
+          </div>
+
           {/* System Prompt */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">

@@ -65,7 +65,12 @@ function parseThinking(content: string): {
   // Complete <think>...</think> block
   const match = content.match(/^<think>([\s\S]*?)<\/think>\s*/);
   if (match) {
-    return { thinking: match[1].trim(), response: content.slice(match[0].length), isThinking: false };
+    const thinking = match[1].trim();
+    return {
+      thinking: thinking.length > 0 ? thinking : null,
+      response: content.slice(match[0].length),
+      isThinking: false,
+    };
   }
   // Still streaming inside <think> (no closing tag yet)
   if (content.startsWith('<think>')) {

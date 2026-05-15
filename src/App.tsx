@@ -19,11 +19,14 @@ import {
   MicOff,
   X,
 } from 'lucide-react';
-import { useWebLLM, DEFAULT_MODEL } from './hooks/useWebLLM';
+import { useWebLLM } from './hooks/useWebLLM';
 import { Sidebar } from './components/Sidebar';
 import { ChatContainer } from './components/ChatContainer';
 import { SettingsModal } from './components/SettingsModal';
+import { ModelPicker } from './components/ModelPicker';
 import type { MessageAttachment } from './types';
+import type { ThinkingMode } from './types';
+import { MODEL_CATALOG, getModelLabel, getRecommendedModelId } from './models';
 
 import * as pdfjsLib from 'pdfjs-dist';
 // @ts-ignore
@@ -47,6 +50,16 @@ interface ISpeechRecognitionEvent {
 type SpeechRecognitionCtor = new () => ISpeechRecognition;
 
 export default function App() {
+  const MODEL_LS_KEY = 'webllm_selected_model';
+  const THINKING_LS_KEY = 'webllm_thinking_mode';
+  const deviceMemoryGB = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
+  const recommendedModelId = getRecommendedModelId(deviceMemoryGB);
+  const [selectedModel, setSelectedModel] = useState<string | null>(
+    () => localStorage.getItem(MODEL_LS_KEY),
+  );
+  const [pickerOpen, setPickerOpen] = useState(!selectedModel);
+  const [thinkingMode, setThinkingMode] = useState<ThinkingMode>('auto');
+
   const {
     status,
     progress,
@@ -67,7 +80,7 @@ export default function App() {
     systemPrompt,
     setSystemPrompt,
     activeModel,
-  } = useWebLLM(DEFAULT_MODEL);
+  } = useWebLLM(selectedModel, thinkingMode);
 
   const [input, setInput] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -85,6 +98,11 @@ export default function App() {
     ta.style.height = 'auto';
     ta.style.height = `${Math.min(ta.scrollHeight, 200)}px`;
   }, [input]);
+
+  useEffect(() => {
+    setThinkingMode('auto');
+    localStorage.setItem(THINKING_LS_KEY, 'auto');
+  }, []);
 
   const handleSubmit = (e?: FormEvent) => {
     e?.preventDefault();
@@ -200,11 +218,30 @@ export default function App() {
   const canSend = status === 'ready' && (
     input.trim().length > 0 || attachedFiles.length > 0
   );
+  const modelLabel = getModelLabel(activeModel);
 
-  const modelLabel = activeModel.includes('E4B') ? 'Gemma 4 E4B' : 'Gemma 4 E2B';
+  const handleSelectModel = (modelId: string) => {
+    localStorage.setItem(MODEL_LS_KEY, modelId);
+    setSelectedModel(modelId);
+    setPickerOpen(false);
+  };
+
+  const handleThinkingModeChange = (mode: ThinkingMode) => {
+    localStorage.setItem(THINKING_LS_KEY, mode);
+    setThinkingMode(mode);
+  };
 
   return (
     <>
+    <ModelPicker
+      open={pickerOpen}
+      models={MODEL_CATALOG}
+      recommendedModelId={recommendedModelId}
+      deviceMemoryGB={deviceMemoryGB}
+      onSelect={handleSelectModel}
+      onClose={() => setPickerOpen(false)}
+      canClose={Boolean(selectedModel)}
+    />
     <div className="flex h-screen bg-[#212121] text-[#ececec] overflow-hidden font-sans">
       {/* ── Sidebar ───────────────────────────────────────────────────────── */}
       {sidebarOpen && (
@@ -212,7 +249,7 @@ export default function App() {
           conversations={conversations}
           activeConversationId={activeConversationId}
           modelCached={modelCached}
-          modelName={activeModel}
+          modelLabel={modelLabel}
           onNewChat={startNewChat}
           onLoadConversation={loadConversation}
           onDeleteConversation={deleteConversation}
@@ -237,6 +274,25 @@ export default function App() {
           </button>
 
           <span className="text-sm font-medium text-[#adadbe] ml-2">{modelLabel}</span>
+
+          <div className="ml-3 flex items-center gap-1 text-xs">
+            {(['instant', 'auto', 'thinking'] as const).map(mode => (
+              <button
+                key={mode}
+                onClick={() => handleThinkingModeChange(mode)}
+                className={`px-2.5 py-1 rounded-full border transition-colors
+                  ${
+                    thinkingMode === mode
+                      ? 'bg-emerald-600/20 text-emerald-300 border-emerald-500/50'
+                      : 'bg-[#2a2a2a] text-[#8e8ea0] border-[#3a3a3a] hover:text-[#ececec]'
+                  }`}
+              >
+                {mode === 'instant' && 'Instant'}
+                {mode === 'auto' && 'Auto'}
+                {mode === 'thinking' && 'Thinking'}
+              </button>
+            ))}
+          </div>
 
           {/* Progress pill — initial load */}
           {isLoading && (
@@ -408,7 +464,7 @@ export default function App() {
                       value={input}
                       onChange={e => setInput(e.target.value)}
                       onKeyDown={handleKeyDown}
-                      placeholder="Message Gemma 4…"
+                      placeholder={`Message ${modelLabel}…`}
                       rows={1}
                       disabled={isLoading || isError}
                       className="flex-1 bg-transparent text-[15px] pt-1.5 text-[#ececec] placeholder-[#8e8ea0]
@@ -462,7 +518,7 @@ export default function App() {
                 </div>
 
                 <p className="mt-3 text-center text-xs text-[#8e8ea0]">
-                  Gemma 4 runs locally in your browser. No data leaves your device.
+                  {modelLabel} runs locally in your browser. No data leaves your device.
                 </p>
               </form>
             </div>
@@ -474,6 +530,7 @@ export default function App() {
     <SettingsModal
       open={settingsOpen}
       systemPrompt={systemPrompt}
+      onChangeModel={() => setPickerOpen(true)}
       onSave={setSystemPrompt}
       onClose={() => setSettingsOpen(false)}
     />
