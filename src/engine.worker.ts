@@ -46,6 +46,7 @@ function buildAppConfig(modelId: string): AppConfig | null {
         required_features: ['shader-f16'],
         overrides: {
           context_window_size: -1,
+          sliding_window_size: -1,
         },
       },
     ],
