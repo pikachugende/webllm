@@ -44,6 +44,9 @@ function buildAppConfig(modelId: string): AppConfig | null {
         model_id: modelId,
         model_lib: `${repo}/resolve/main/libs/${libName}`,
         required_features: ['shader-f16'],
+        overrides: {
+          sliding_window_size: -1,
+        },
       },
     ],
   };
