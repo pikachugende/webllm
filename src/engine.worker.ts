@@ -79,7 +79,9 @@ self.onmessage = async (event: MessageEvent<ToWorker>) => {
     // ── Initialise the engine (download + compile) ─────────────────────────
     case 'init': {
       try {
-        const hasWorkerWebGPU = Boolean((self as typeof self & { navigator?: Navigator }).navigator?.gpu);
+        const hasWorkerWebGPU = Boolean(
+          (self as typeof self & { navigator?: { gpu?: unknown } }).navigator?.gpu,
+        );
         self.postMessage({
           type: 'progress',
           progress: 0,

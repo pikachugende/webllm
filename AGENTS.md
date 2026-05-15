@@ -33,15 +33,15 @@ Cross-Origin-Embedder-Policy: require-corp
 - **`@mlc-ai/web-llm` is excluded from pre-bundling** (`optimizeDeps.exclude`) to avoid double-bundling.
 - **`VITE_BASE_URL` env var** controls the `<base>` path (default `/`). The GitHub Pages deploy workflow sets it to `/<REPO_NAME>/`.
 
-## Model: Gemma 4
+## Model selection
 
-The app uses a single Gemma 4 model with native thinking support. No separate "reasoning" model is needed — the model emits `<think>...</think>` blocks internally.
+The app shows a model picker on first load. Users can switch models later via Settings → Change model. All models support the thinking toggle.
 
-- **Model source**: Community MLC model from `welcoma/gemma-4-E2B-it-q4f16_1-MLC` on HuggingFace (not in `@mlc-ai/web-llm`'s prebuilt catalog).
-- **Worker passes custom `appConfig`** to `CreateMLCEngine` with the HuggingFace repo URL and WASM model library path.
-- **RAM detection**: On startup, `navigator.deviceMemory` is checked. If ≥ 6 GB, the E4B model is selected; otherwise E2B. The E4B model is not yet publicly available but the detection logic is in place.
-- **Model IDs** are defined in `src/types.ts` as `GEMMA4_E2B_MODEL_ID` / `GEMMA4_E4B_MODEL_ID`.
-- **`@mlc-ai/web-llm` is pinned to `^0.2.83`** — the latest version. Upgrading requires checking for new model WASM library compatibility.
+- **Catalog**: Defined in `src/models.ts` (Gemma 4 E2B + Qwen3 family).
+- **Recommendation**: Based on `navigator.deviceMemory` (2/4/6/8+ GB buckets). Gemma 4 E2B is recommended at 6+ GB.
+- **Custom model source**: Gemma 4 E2B uses `welcoma/gemma-4-E2B-it-q4f16_1-MLC` on HuggingFace (not in `@mlc-ai/web-llm` prebuilt list).
+- **Worker appConfig**: `src/engine.worker.ts` supplies custom config for Gemma 4, and prebuilt config for all other models.
+- **`@mlc-ai/web-llm` is pinned to `^0.2.83`** — upgrading requires checking for new model WASM library compatibility.
 
 ## Web Worker message protocol
 
@@ -49,24 +49,23 @@ The single source of truth for worker communication is `src/types.ts` — the `T
 
 ## Key architecture facts
 
-- **Worker**: `src/engine.worker.ts` runs the entire MLCEngine off the main thread. It handles init, generate, and abort. No reload or preload — only one model is used.
-- **Hook**: `src/hooks/useWebLLM.ts` is the central orchestrator — spawns/terminates the worker, manages conversations in localStorage, handles streaming. No model switching, no classifier routing.
-- **Classifier**: `src/classifier/router.ts` is retained for reference but is **no longer used** — Gemma 4 handles thinking/instant responses natively.
-- **Single model architecture**: No more dual-model setup. The Gemma 4 model handles both quick responses and deep thinking internally.
+- **Worker**: `src/engine.worker.ts` runs the MLCEngine off the main thread. It handles init, generate, and abort. Model is selected by the UI and reloaded via a new worker instance.
+- **Hook**: `src/hooks/useWebLLM.ts` orchestrates the worker, manages conversations in localStorage, streams responses, and applies the auto-thinking router.
+- **Auto routing**: `src/classifier/router.ts` is used in Auto mode alongside heuristics in `useWebLLM.ts`.
 - **Thinking UI**: The `ChatContainer` parses `<think>...</think>` blocks from the model output. The UI shows a collapsible thinking panel, same as before.
 
-## Adding a new Gemma 4 model
+## Adding a new model
 
-If a new Gemma 4 variant (e.g. E4B) becomes available on HuggingFace:
-
-1. Add the model ID constant in `src/types.ts`
-2. Add the HuggingFace repo URL and WASM path in `src/engine.worker.ts` (`buildAppConfig`)
-3. Update `selectGemma4Model()` in `src/types.ts` with the RAM threshold
+1. Add a new entry in `src/models.ts`.
+2. If it is a custom MLC model, extend `buildAppConfig()` in `src/engine.worker.ts`.
+3. Ensure it supports the thinking toggle (`enable_thinking` works for it).
 
 ## localStorage keys (do not rename without migration)
 
 - `webllm_conversations` — array of `Conversation` objects
 - `webllm_system_prompt` — user-defined system prompt string
+- `webllm_selected_model` — model ID chosen in the picker
+- `webllm_thinking_mode` — `instant` | `auto` | `thinking`
 
 ## GitHub Pages deploy
 
